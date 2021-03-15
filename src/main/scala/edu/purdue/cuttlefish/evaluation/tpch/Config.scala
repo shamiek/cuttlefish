@@ -31,7 +31,9 @@ object Config {
 
     def getPath(executionMode: ExecutionMode.Value, name: String) = {
         val dir = if (SparkConfig.fileSystem == SparkConfig.FileSystem.LOCAL)
-            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources")
+//            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
+//            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
+            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL")
         else
             SparkConfig.getHDFSPath("/tpch")
 

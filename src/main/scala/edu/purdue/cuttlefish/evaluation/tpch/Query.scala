@@ -102,6 +102,7 @@ object Query {
         val bw = new BufferedWriter(new FileWriter(outFile, true))
         times.foreach {
             case (key, value) => bw.write(f"${key}%s\t${value}%1.8f\n")
+//            case (key, value) => bw.write(f"${value}%1.8f\n")
         }
         bw.close()
     }
