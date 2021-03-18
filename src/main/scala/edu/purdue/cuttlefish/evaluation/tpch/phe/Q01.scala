@@ -32,7 +32,10 @@ class Q01(spark: SparkSession) extends PheQuery(spark) {
           .sort($"l_returnflag", $"l_linestatus")
 
         // client-side
-        getResults(q)
+      val interimRes = getResults(q)
+      val startClientSide = System.nanoTime()
+
+      (interimRes
           .map(row => {
               val sum_quantity = Schema.decrypt(Scheme.PAILLIER, row, q.columns, "sum_quantity")
               val sum_extendedprice = Schema.decrypt(Scheme.PAILLIER, row, q.columns, "sum_extendedprice")
@@ -51,6 +54,6 @@ class Q01(spark: SparkSession) extends PheQuery(spark) {
                     / row.getLong(q.columns.indexOf("count_discount")) / 100,
                   row.getLong(q.columns.indexOf("count_quantity"))
               ))
-          })
+          }), startClientSide)
     }
 }

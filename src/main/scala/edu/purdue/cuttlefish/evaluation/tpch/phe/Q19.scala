@@ -29,11 +29,13 @@ class Q19(spark: SparkSession) extends PheQuery(spark) {
             $"p_size" >= 4294967296L && $"p_size" <= 64424509440L))
       .select(esub($"l_extendedprice",  $"l_ext_disc").as("volume"), $"l_quantity", $"p_brand")
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     def sumRow(index: Int)(r1: Row, r2: Row) =
       Row(0L, 0L, (r1.getLong(index) + r2.getLong(index)))
 
     // client-side
-   val r =  getResults(q)
+   val r =  interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -55,6 +57,6 @@ class Q19(spark: SparkSession) extends PheQuery(spark) {
        && row.getLong(q.columns.indexOf("l_quantity")) <= 20
    )).reduce(sumRow(q.columns.indexOf("volume")))
 
-    Seq(Row(r.get(q.columns.indexOf("volume"))))
+    (Seq(Row(r.get(q.columns.indexOf("volume")))), startClientSide)
   }
 }

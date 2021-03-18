@@ -47,14 +47,16 @@ class Q21(spark: SparkSession) extends PheQuery(spark) {
       .sort($"numwait".desc, $"s_name")
       .limit(100)
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
         Schema.decrypt(row, q.columns, "s_name"),
         Schema.decrypt(Scheme.PTXT, row, q.columns, "numwait")
       ))
-    })
+    }), startClientSide)
   }
 }

@@ -14,6 +14,7 @@ import scala.collection.GenSeq
   * Savvas Savvides <savvas@purdue.edu>
   *
   */
+
 abstract class Query(spark: SparkSession, executionMode: ExecutionMode.Value) {
     lazy val customer: DataFrame = getTable(spark, executionMode, "customer")
     lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem")
@@ -44,9 +45,41 @@ abstract class Query(spark: SparkSession, executionMode: ExecutionMode.Value) {
     def execute(): GenSeq[Row]
 }
 
+abstract class QueryMod(spark: SparkSession, executionMode: ExecutionMode.Value) {
+    lazy val customer: DataFrame = getTable(spark, executionMode, "customer")
+    lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem")
+    lazy val nation: DataFrame = getTable(spark, executionMode, "nation")
+    lazy val order: DataFrame = getTable(spark, executionMode, "orders")
+    lazy val region: DataFrame = getTable(spark, executionMode, "region")
+    lazy val supplier: DataFrame = getTable(spark, executionMode, "supplier")
+    lazy val part: DataFrame = getTable(spark, executionMode, "part")
+    lazy val partsupp: DataFrame = getTable(spark, executionMode, "partsupp")
+//    lazy val interimQ01 = getIntrmTable()
+
+    /**
+     * Get the name of the class excluding dollar signs and package
+     */
+    private def getClassName(): String = {
+        this.getClass.getName.split("\\.").last.replaceAll("\\$", "")
+    }
+
+    /**
+     * Get the results from a dataframe
+     */
+    def getResults(df: DataFrame) = df.collect()
+
+//    def getInterimRes(): Dataset[Row]
+    /**
+     * Executes the actual query, and returns post-computation time
+     *
+     * @return an array containing the results
+     */
+    def execute(): (GenSeq[Row], Double)
+}
+
 abstract class PtxtQuery(spark: SparkSession) extends Query(spark, ExecutionMode.PTXT) {}
 
-abstract class PheQuery(spark: SparkSession) extends Query(spark, ExecutionMode.PHE) {}
+abstract class PheQuery(spark: SparkSession) extends QueryMod(spark, ExecutionMode.PHE) {}
 
 object Query {
 
@@ -62,7 +95,7 @@ object Query {
       * @param queryNum      the query to run. If 0, execute all tpc-h queries
       * @return a list of (Query name, Execution time)
       */
-    def executeQueries(spark: SparkSession, executionMode: ExecutionMode.Value, queryNum: Int): List[(String, Double)] = {
+    def executeQueries(spark: SparkSession, executionMode: ExecutionMode.Value, queryNum: Int): List[(String, Double, Double)] = {
 
         if (queryNum < 0 || queryNum > 22)
             throw new IllegalArgumentException("Query Number must be in range [0, 22]")
@@ -75,33 +108,35 @@ object Query {
         val queryTo = if (queryNum <= 0) 22 else queryNum
 
         // record execution times
-        var times = List[(String, Double)]()
+        var times = List[(String, Double, Double)]()
 
         for (queryNo <- queryFrom to queryTo) {
             val queryName = f"Q${queryNo}%02d"
             val queryPath = packageName + "." + modeString + "." + queryName
-            val query = Class.forName(queryPath).getConstructor(classOf[SparkSession]).newInstance(spark).asInstanceOf[Query]
+            val query = Class.forName(queryPath).getConstructor(classOf[SparkSession]).newInstance(spark).asInstanceOf[QueryMod]
 
 
             println("Executing Query: " + queryPath)
             println("===============================================================")
             val startTime = System.nanoTime()
-            val results = query.execute()
+            val (results, startClientSide) = query.execute()
+
             val elapsed = (System.nanoTime() - startTime) / 1000000000.0d
+            val totalClientSide = (System.nanoTime() - startClientSide)/ 1000000000.0d
             outputResults(results)
 
-            times = times :+ (queryPath, elapsed)
+            times = times :+ (queryPath, elapsed, totalClientSide)
             println()
         }
 
         return times
     }
 
-    def writeTimes(times: List[(String, Double)]): Unit = {
+    def writeTimes(times: List[(String, Double, Double)]): Unit = {
         val outFile = new File("TIMES.txt")
         val bw = new BufferedWriter(new FileWriter(outFile, true))
         times.foreach {
-            case (key, value) => bw.write(f"${key}%s\t${value}%1.8f\n")
+            case (key, elapsed, clientSide) => bw.write(f"${key}%s\t${elapsed}%1.8f\t${clientSide}%1.8f\n")
 //            case (key, value) => bw.write(f"${value}%1.8f\n")
         }
         bw.close()

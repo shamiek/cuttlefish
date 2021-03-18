@@ -22,9 +22,10 @@ class Q14(spark: SparkSession) extends PheQuery(spark) {
         .select($"value", when(UDF.swpMatch($"p_type" , lit("1MSu90beG2zKid3zn4PyuQ.*")),$"value").otherwise(null).as("promo_value"))
       .agg(esum($"value").as("sum_value"),
         esum($"promo_value").as("sum_promo_value"))
-
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       val value = Schema.decrypt(Scheme.PAILLIER, row, q.columns, "sum_value")
@@ -32,6 +33,6 @@ class Q14(spark: SparkSession) extends PheQuery(spark) {
       Row.fromSeq(Seq(
         (promo_value.asInstanceOf[Long]*100)/value.asInstanceOf[Long]
       ))
-    })
+    }), startClientSide)
   }
 }

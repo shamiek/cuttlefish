@@ -24,14 +24,16 @@ class Q04(spark: SparkSession) extends PheQuery(spark) {
           .agg(count($"o_orderpriority").as("count_orderpriority"))
           .sort($"o_orderpriority")
 
+        val interimRes = getResults(q)
+        val startClientSide = System.nanoTime()
         // client-side
-        getResults(q)
+        (interimRes
           // decrypt
           .map(row => {
             Row.fromSeq(Seq(
                 Schema.decrypt(row, q.columns, "o_orderpriority"),
                 Schema.decrypt(Scheme.PTXT, row, q.columns, "count_orderpriority")
             ))
-        })
+        }), startClientSide)
     }
 }

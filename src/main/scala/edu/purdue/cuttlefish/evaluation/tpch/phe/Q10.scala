@@ -30,7 +30,9 @@ class Q10(spark: SparkSession) extends PheQuery(spark) {
       .select($"c_custkey", $"c_name", $"revenue", $"c_acctbal", $"n_name", $"c_address", $"c_phone", $"c_comment") //re-order
 
     // client-side
-    getResults(q)
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -44,6 +46,6 @@ class Q10(spark: SparkSession) extends PheQuery(spark) {
         Schema.decrypt(row, q.columns, "c_comment")
       ))
     }).sortBy(r => (r.getLong(q.columns.indexOf("revenue")))).reverse
-      .take(20)
+      .take(20), startClientSide)
   }
 }

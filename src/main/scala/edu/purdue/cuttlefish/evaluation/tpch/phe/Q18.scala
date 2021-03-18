@@ -25,8 +25,10 @@ class Q18(spark: SparkSession) extends PheQuery(spark) {
       .agg(esum($"l_quantity").as("sum_quantity_2"))
       .sort($"o_totalprice".desc, $"o_orderdate")
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -45,6 +47,6 @@ class Q18(spark: SparkSession) extends PheQuery(spark) {
         row.getString(q.columns.indexOf("o_orderdate")),
         row.getLong(q.columns.indexOf("o_totalprice")),
         row.getLong(q.columns.indexOf("sum_quantity_2"))))
-      .take(100)
+      .take(100), startClientSide)
   }
 }

@@ -25,13 +25,15 @@ class Q15(spark: SparkSession) extends PheQuery(spark) {
       .select($"s_suppkey", $"s_name", $"s_address", $"s_phone", $"total")
       .sort($"s_suppkey")
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     def maxRow(index: Int)(r1: Row, r2: Row) =
       Row(0, 0, 0, 0, if(r1.getLong(index) > r2.getLong(index))
         r1.getLong(index)
       else r2.getLong(index))
 
     // client-side
-    val r = getResults(q)
+    val r = interimRes
       .map(row => {
         Row.fromSeq(Seq(
           Schema.decrypt(row, q.columns, "s_suppkey"),
@@ -43,7 +45,7 @@ class Q15(spark: SparkSession) extends PheQuery(spark) {
       })
     val max_total = r.reduce(maxRow(q.columns.indexOf("total")))
 
-    r.filter(row =>
-    row.getLong(q.columns.indexOf("total")) == max_total(4))
+    (r.filter(row =>
+    row.getLong(q.columns.indexOf("total")) == max_total(4)), startClientSide)
   }
 }

@@ -11,11 +11,11 @@ if [ -z "${CUTTLEFISH_HOME}" ]; then
 fi
 
 # generate tables
-echo "Generating TPC-H tables"
-cd ${CUTTLEFISH_HOME}/resources/tpch-2.18/dbgen
-make
-./dbgen -f -s 0.01
-cp *.tbl ${CUTTLEFISH_HOME}/resources
+#echo "Generating TPC-H tables"
+#cd ${CUTTLEFISH_HOME}/resources/tpch-2.18/dbgen
+#make
+#./dbgen -f -s 0.01
+#cp *.tbl ${CUTTLEFISH_HOME}/resources
 
 
 cd ${CUTTLEFISH_HOME}

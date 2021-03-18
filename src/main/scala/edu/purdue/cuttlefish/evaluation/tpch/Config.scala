@@ -44,5 +44,4 @@ object Config {
         val path = getPath(executionMode, tableName)
         spark.read.parquet(path)
     }
-
 }

@@ -21,9 +21,10 @@ class Q12(spark: SparkSession) extends PheQuery(spark) {
       .agg(count(when(($"o_orderpriority" === ";7_\\QOX^><C>C@A<C@") || ($"o_orderpriority" === "<7RSQR><C>C@A<C@"), true)).as("high_line_count"),
         count(when(($"o_orderpriority" =!= ";7_\\QOX^><C>C@A<C@") && ($"o_orderpriority" =!= "<7RSQR><C>C@A<C@"), true)).as("low_line_count"))
         .sort($"l_shipmode")
-
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -31,6 +32,6 @@ class Q12(spark: SparkSession) extends PheQuery(spark) {
         Schema.decrypt(Scheme.PTXT, row, q.columns, "high_line_count"),
         Schema.decrypt(Scheme.PTXT, row, q.columns, "low_line_count")
       ))
-    })
+    }), startClientSide)
   }
 }

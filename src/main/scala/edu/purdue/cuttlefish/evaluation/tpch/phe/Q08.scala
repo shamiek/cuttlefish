@@ -55,9 +55,10 @@ class Q08(spark: SparkSession) extends PheQuery(spark) {
           .sort($"o_orderyear")
 
 
-
+        val interimRes = getResults(q)
+        val startClientSide = System.nanoTime()
         // client-side
-        getResults(q)
+        (interimRes
           // decrypt
           .map(row => {
             val sum_case_volume = Schema.decrypt(Scheme.PAILLIER, row, q.columns, "sum_case_volume")
@@ -66,6 +67,6 @@ class Q08(spark: SparkSession) extends PheQuery(spark) {
                 Schema.decrypt(Scheme.OPES, row, q.columns, "o_orderyear"),
                 sum_case_volume.asInstanceOf[Long] / sum_volume.asInstanceOf[Long]
             ))
-        })
+        }), startClientSide)
     }
 }

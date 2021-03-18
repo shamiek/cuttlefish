@@ -22,13 +22,17 @@ class Q22(spark: SparkSession) extends PheQuery(spark) {
       .filter($"o_custkey".isNull)
       .select($"c_country_code", $"c_acctbal")
 
+    val interimResAvgCust = getResults(avg_customer)
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
+
     def sumRow(index: Int)(r1: Row, r2: Row) =
       Row((r1.getLong(index) + r2.getLong(index)))
 
     def sumRow1(index: Int)(r1: Row, r2: Row) =
       Row(0L, (r1.getLong(index) + r2.getLong(index)))
 
-    val acct = getResults(avg_customer)
+    val acct = interimResAvgCust
       .map(row => {
         Row.fromSeq(Seq(
           Schema.decrypt(row, avg_customer.columns, "c_acctbal")
@@ -36,7 +40,7 @@ class Q22(spark: SparkSession) extends PheQuery(spark) {
       })
 
     // client-side
-    val r = getResults(q)
+    val r = interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -53,9 +57,9 @@ class Q22(spark: SparkSession) extends PheQuery(spark) {
     val merged = s ++ c
     val grouped = merged.groupBy(_._1)
 
-    grouped.mapValues(_.map(_._2).toSeq).toSeq.flatMap(seq =>
+    (grouped.mapValues(_.map(_._2).toSeq).toSeq.flatMap(seq =>
     Seq(Row(seq._1, seq._2(1), seq._2(0))))
       .sortBy(row =>
-      row.getString(q.columns.indexOf("c_country_code")))
+      row.getString(q.columns.indexOf("c_country_code"))), startClientSide)
   }
 }

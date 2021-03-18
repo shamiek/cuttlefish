@@ -36,7 +36,11 @@ class Q20(spark: SparkSession) extends PheQuery(spark) {
       .select($"s_name", $"s_address", $"ps_availqty")
       .sort($"s_name")
 
-    val sum_quantity = getResults(flineitem)
+    val interimResFLineItem = getResults(flineitem)
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
+
+    val sum_quantity = interimResFLineItem
         .map(row => {
           val sumq =  Schema.decrypt(Scheme.PAILLIER, row, flineitem.columns, "sum_quantity")
           Row.fromSeq(Seq(
@@ -45,7 +49,7 @@ class Q20(spark: SparkSession) extends PheQuery(spark) {
         })
 
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -55,6 +59,6 @@ class Q20(spark: SparkSession) extends PheQuery(spark) {
       ))
     }).filter(row =>
     row.getLong(q.columns.indexOf("ps_availqty")) > sum_quantity(0).get(0).asInstanceOf[Double])
-      .map(row => Row(row.getString(q.columns.indexOf("s_name")), row.getString(q.columns.indexOf("s_address"))))
+      .map(row => Row(row.getString(q.columns.indexOf("s_name")), row.getString(q.columns.indexOf("s_address")))), startClientSide)
   }
 }

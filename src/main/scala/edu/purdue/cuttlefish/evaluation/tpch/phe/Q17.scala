@@ -26,10 +26,12 @@ class Q17(spark: SparkSession) extends PheQuery(spark) {
       .join(fpart, $"t_partkey" === fpart("p_partkey"))
       .select($"l_quantity", $"sum_quantity", $"count_quantity", $"l_extendedprice")
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     def sumRow(index: Int)(r1: Row, r2: Row) =
       Row(0, 0, (r1.getString(index).toDouble + r2.getString(index).toDouble).toString)
 
-    val avg_quantity = getResults(q)
+    val avg_quantity = interimRes
       .map(row => {
         val sum_quantity = Schema.decrypt(Scheme.PAILLIER, row, q.columns, "sum_quantity")
         val count_quantity = Schema.decrypt(Scheme.PTXT, row, q.columns, "count_quantity")
@@ -40,7 +42,7 @@ class Q17(spark: SparkSession) extends PheQuery(spark) {
       })
 
     // client-side
-    val r = getResults(q)
+    val r = interimRes
       // decrypt
       .map(row => {
         Row.fromSeq(Seq(
@@ -51,7 +53,7 @@ class Q17(spark: SparkSession) extends PheQuery(spark) {
     row.getLong(q.columns.indexOf("l_quantity")) < avg_quantity(0).get(0).asInstanceOf[Long])
       .reduceOption(sumRow(q.columns.indexOf("l_extendedprice")))
 
-    Seq(if(r == None) Row(null)
-    else Row(r.get(q.columns.indexOf("l_extendedprice")).asInstanceOf[Long]/7))
+    (Seq(if(r == None) Row(null)
+    else Row(r.get(q.columns.indexOf("l_extendedprice")).asInstanceOf[Long]/7)), startClientSide)
   }
 }

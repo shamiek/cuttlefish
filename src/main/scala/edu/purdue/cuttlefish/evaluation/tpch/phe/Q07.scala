@@ -38,8 +38,10 @@ class Q07(spark: SparkSession) extends PheQuery(spark) {
           .agg(esum($"volume").as("revenue"))
           .sort($"supp_nation", $"cust_nation", $"l_shipyear")
 
+        val interimRes = getResults(q)
+        val startClientSide = System.nanoTime()
         // client-side
-        getResults(q)
+        (interimRes
           // decrypt
           .map(row => {
             Row.fromSeq(Seq(
@@ -48,6 +50,6 @@ class Q07(spark: SparkSession) extends PheQuery(spark) {
                 Schema.decrypt(Scheme.OPES, row, q.columns, "l_shipyear"),
                 Schema.decrypt(Scheme.PAILLIER, row, q.columns, "revenue")
             ))
-        })
+        }), startClientSide)
     }
 }

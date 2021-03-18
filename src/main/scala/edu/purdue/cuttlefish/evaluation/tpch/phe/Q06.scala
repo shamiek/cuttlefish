@@ -17,10 +17,12 @@ class Q06(spark: SparkSession) extends PheQuery(spark) {
           .select($"l_discount_rnd", $"l_quantity_rnd", $"l_ext_disc_rnd")
 
         // client-side
+        val interimRes = getResults(q)
+        val startClientSide = System.nanoTime()
         def sumRow(index: Int)(r1: Row, r2: Row) =
             Row(0, 0, (r1.getString(index).toDouble + r2.getString(index).toDouble).toString)
 
-        val r = getResults(q)
+        val r = interimRes
           // decrypt
           .map(row => {
             Row.fromSeq(Seq(
@@ -38,6 +40,6 @@ class Q06(spark: SparkSession) extends PheQuery(spark) {
 
         // reduce returns a row. final output must be a sequence of rows
         // we also remove unneeded columns
-        Seq(Row(r.get(q.columns.indexOf("l_ext_disc_rnd"))))
+        (Seq(Row(r.get(q.columns.indexOf("l_ext_disc_rnd")))), startClientSide)
     }
 }

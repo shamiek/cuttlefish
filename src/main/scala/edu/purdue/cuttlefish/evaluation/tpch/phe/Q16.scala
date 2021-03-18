@@ -31,8 +31,10 @@ class Q16(spark: SparkSession) extends PheQuery(spark) {
       .agg(countDistinct($"ps_suppkey").as("supplier_count"))
       .sort($"supplier_count".desc, $"p_brand", $"p_type", $"p_size")*/
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       // decrypt
       .map(row => {
       Row.fromSeq(Seq(
@@ -47,7 +49,7 @@ class Q16(spark: SparkSession) extends PheQuery(spark) {
       .toSeq.flatMap(seq => Seq(Row(seq._1._1, seq._1._2, seq._1._3, seq._2)))
       .sortBy(s => (s.getLong(q.columns.indexOf("ps_suppkey")), s.getString(q.columns.indexOf("p_brand")),
       s.getString(q.columns.indexOf("p_type")), s.getLong(q.columns.indexOf("p_size")))
-      )(Ordering.Tuple4(Ordering.Long.reverse, Ordering.String, Ordering.String, Ordering.Long))
+      )(Ordering.Tuple4(Ordering.Long.reverse, Ordering.String, Ordering.String, Ordering.Long)), startClientSide)
 
   }
 }

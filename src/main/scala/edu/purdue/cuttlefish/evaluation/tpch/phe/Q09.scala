@@ -29,12 +29,14 @@ class Q09(spark: SparkSession) extends PheQuery(spark) {
         esub($"l_extendedprice", $"l_ext_disc").as("sub_eped"),
         $"ps_supplycost", $"l_quantity")
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     def sumRow(index: Int)(r1: Row, r2: Row) =
       Row(0, 0, r1.getLong(index) + r2.getLong(index))
 
 
     // client-side
-     val r = getResults(q)
+     val r = interimRes
       // decrypt
       .map(row => {
       val ps_supplycost = Schema.decrypt(row, q.columns, "ps_supplycost")
@@ -51,7 +53,7 @@ class Q09(spark: SparkSession) extends PheQuery(spark) {
       .groupBy(row1 => (row1.getString(q.columns.indexOf("n_name")), row1.getString(q.columns.indexOf("o_orderyear"))))
        .mapValues(_.reduce(sumRow(2)).getLong(2).toString)
          .toSeq.flatMap(seq => Seq(Row(seq._1._1, seq._1._2, seq._2)))
-      r.sortBy(row => (row.getString(q.columns.indexOf("n_name")), row.getString(q.columns.indexOf("o_orderyear")))
-      )(Ordering.Tuple2(Ordering.String, Ordering.String.reverse))
+    (r.sortBy(row => (row.getString(q.columns.indexOf("n_name")), row.getString(q.columns.indexOf("o_orderyear")))
+      )(Ordering.Tuple2(Ordering.String, Ordering.String.reverse)), startClientSide)
   }
 }

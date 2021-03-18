@@ -21,13 +21,15 @@ class Q13(spark: SparkSession) extends PheQuery(spark) {
       .agg(count($"c_custkey").as("custdist"))
       .sort($"custdist".desc, $"c_count".desc)
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    getResults(q)
+    (interimRes
       .map(row => {
         Row.fromSeq(Seq(
           Schema.decrypt(Scheme.PTXT, row, q.columns, "c_count"),
           Schema.decrypt(Scheme.PTXT, row, q.columns, "custdist")
         ))
-      })
+      }), startClientSide)
   }
 }

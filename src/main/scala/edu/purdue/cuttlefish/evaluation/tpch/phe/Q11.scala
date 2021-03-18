@@ -34,8 +34,10 @@ class Q11(spark: SparkSession) extends PheQuery(spark) {
         ))
       })
 
+    val interimRes = getResults(q)
+    val startClientSide = System.nanoTime()
     // client-side
-    val r  = getResults(q)
+    val r  = interimRes
       .map(row => {
       Row.fromSeq(Seq(
           Schema.decrypt(row, q.columns, "ps_partkey"),
@@ -47,6 +49,6 @@ class Q11(spark: SparkSession) extends PheQuery(spark) {
         .sortBy(r =>
           r.getLong(q.columns.indexOf("value"))
         ).reverse
-    r
+    (r, startClientSide)
   }
 }
