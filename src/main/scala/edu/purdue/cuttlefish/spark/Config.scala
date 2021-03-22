@@ -12,8 +12,9 @@ object Config {
         val LOCAL, HDFS = Value
     }
 
-    val fileSystem = FileSystem.LOCAL
-
+//    val fileSystem = FileSystem.LOCAL
+        val fileSystem = FileSystem.HDFS
+    
     def getDefaultSpark(appName: String = "Unnamed App", master: String = "local") = {
 
         val masterURL =
