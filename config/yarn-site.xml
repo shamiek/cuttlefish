@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<configuration>
+
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>REPLACEME</value>
+    <description>The hostname of the ResourceManager</description>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+    <description>shuffle service for MapReduce</description>
+  </property>
+
+  <property>
+      <name>yarn.nodemanager.pmem-check-enabled</name>
+      <value>false</value>
+  </property>
+
+  <property>
+      <name>yarn.nodemanager.vmem-check-enabled</name>
+      <value>false</value>
+  </property>
+
+  <property>
+      <name>yarn.nodemanager.resource.detect-hardware-capabilities</name>
+      <value>true</value>
+  </property>
+
+  <!-- the total number of cores available per data node -->
+  <property>
+     <name>yarn.nodemanager.resource.cpu-vcores</name>
+     <value>-1</value>
+  </property>
+
+  <!-- the total RAM available per data node -->
+  <property>
+     <name>yarn.nodemanager.resource.memory-mb</name>
+     <value>-1</value>
+  </property>
+
+  <!-- the minimum RAM in MB to allocate per container-->
+  <property>
+     <name>yarn.scheduler.minimum-allocation-mb</name>
+     <value>1024</value>
+  </property>
+
+</configuration>

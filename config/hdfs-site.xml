@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+ <property>
+   <name>dfs.replication</name>
+   <value>3</value>
+ </property>
+
+ <property>
+   <name>dfs.namenode.name.dir</name>
+   <value>file:/home/ubuntu/hdfs/namenode</value>
+ </property>
+
+ <property>
+   <name>dfs.datanode.data.dir</name>
+   <value>file:/home/ubuntu/hdfs/datanode</value>
+ </property>
+
+<property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+</property>
+
+<property>
+    <name>dfs.permissions.enable</name>
+    <value>false</value>
+</property>
+
+
+<!--
+<property>
+   <name>dfs.blocksize</name>
+   <value>128m</value>
+</property>
+
+<property>
+   <name>dfs.namenode.fs-limits.min-block-size</name>
+   <value>524288</value>
+</property>
+
+<property>
+   <name>dfs.namenode.fs-limits.max-blocks-per-file</name>
+   <value>2097152</value>
+</property>
+-->
+</configuration>
