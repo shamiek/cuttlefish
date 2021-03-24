@@ -70,7 +70,7 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
 	ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} 'rm -rf '$HOME'/hdfs/*'
 
     # copy encryption keys
-    scp -o "StrictHostKeyChecking no" ${CUTTLEFISH_HOME}/resources/eval_keys/* "${node}:/tmp/"
+    scp -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${CUTTLEFISH_HOME}/resources/eval_keys/* "${node}:/tmp/"
 
 	# if this node is the namenode, there is nothing else to do
     if [ "$node" = "$MASTERNODE" ]; then
