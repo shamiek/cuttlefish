@@ -58,16 +58,16 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
     echo "At machine: $node"
 
 	# kill previous hadoop processes that did not terminate gracefully
-    for pid in $( ssh -o "StrictHostKeyChecking no" ${node} 'pgrep -U ubuntu java' ); do
+    for pid in $( ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} 'pgrep -U ubuntu java' ); do
     	echo "killing pid: "$pid
-		ssh -o "StrictHostKeyChecking no" ${node} "kill -9 ${pid}"
+		ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} "kill -9 ${pid}"
     done
 
 	# clear old hadoop files from datanodes
 	echo "remove temp files"
-	ssh -o "StrictHostKeyChecking no" ${node} 'rm -rf /tmp/*'
+	ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} 'rm -rf /tmp/*'
 	echo "remove hdfs files"
-	ssh -o "StrictHostKeyChecking no" ${node} 'rm -rf '$HOME'/hdfs/*'
+	ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} 'rm -rf '$HOME'/hdfs/*'
 
     # copy encryption keys
     scp -o "StrictHostKeyChecking no" ${CUTTLEFISH_HOME}/resources/eval_keys/* "${node}:/tmp/"
@@ -81,8 +81,8 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
     fi
 
 	# sync hadoop in all datanodes
-	rsync -e 'ssh -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
-	rsync -e 'ssh -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
+	rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
+	rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
 done
 
 echo "Resetting hadoop"
