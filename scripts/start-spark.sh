@@ -81,15 +81,16 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
     fi
 
 	# sync hadoop in all datanodes
-	rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
-	rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
+	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
+	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
+	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
+	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
 done
-
+# set up passwordless ssh
+eval `ssh-agent` && ssh-add /home/ubuntu/microTest.pem && ssh-add -L
 echo "Resetting hadoop"
 hdfs namenode -format
-
 echo "Starting HDFS"
 start-dfs.sh
-eval `ssh-agent` && ssh-add /home/ubuntu/microTest.pem && ssh-add -L
 echo "Starting Spark master on this node. Starts worker on each node specified in conf/slaves"
 #$SPARK_HOME/sbin/start-all.sh
