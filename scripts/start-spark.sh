@@ -70,7 +70,7 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
 	ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${node} 'rm -rf '$HOME'/hdfs/*'
 
     # copy encryption keys
-    scp -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${CUTTLEFISH_HOME}/resources/eval_keys/* "${node}:/tmp/"
+    scp -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no" ${CUTTLEFISH_HOME}/resources/eval_keys/* "ubuntu@${node}:/tmp/"
 
 	# if this node is the namenode, there is nothing else to do
     if [ "$node" = "$MASTERNODE" ]; then
@@ -90,6 +90,6 @@ hdfs namenode -format
 
 echo "Starting HDFS"
 start-dfs.sh
-
+eval `ssh-agent` && ssh-add /home/ubuntu/microTest.pem && ssh-add -L
 echo "Starting Spark master on this node. Starts worker on each node specified in conf/slaves"
-$SPARK_HOME/sbin/start-all.sh
+#$SPARK_HOME/sbin/start-all.sh
