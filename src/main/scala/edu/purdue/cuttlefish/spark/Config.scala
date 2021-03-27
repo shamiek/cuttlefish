@@ -4,9 +4,9 @@ import org.apache.spark.sql.SparkSession
 
 object Config {
     val CUTTLEFISH_HOME = sys.env("CUTTLEFISH_HOME")
-    val MASTER = ""
+    val MASTER = "master"
     val SPARK_PORT = "7077"
-    val HDFS_PORT = "9001"
+    val HDFS_PORT = "9000"
 
     object FileSystem extends Enumeration {
         val LOCAL, HDFS = Value
@@ -26,7 +26,7 @@ object Config {
         val spark = SparkSession
           .builder()
           .appName(appName)
-          .master(masterURL)
+//          .master(masterURL)
           .getOrCreate()
         spark.sparkContext.setLogLevel("ERROR")
 

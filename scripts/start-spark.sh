@@ -86,8 +86,8 @@ for node in $(cat ${MASTERFILE} ${SLAVESFILE}); do
 	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz --exclude=logs "$HADOOP_HOME" ${node}:"$HOME"
 	#rsync -e 'ssh -i /home/ubuntu/cuttlefish/resources/aws_keys/microTest.pem -o "StrictHostKeyChecking no"' -avz "$SPARK_HOME" ${node}:"$HOME"
 done
-# set up passwordless ssh
-eval `ssh-agent` && ssh-add /home/ubuntu/microTest.pem && ssh-add -L
+# set up passwordless ssh, this is suboptimal. Already configured the ami with passwordless ssh 
+# eval `ssh-agent` && ssh-add /home/ubuntu/microTest.pem && ssh-add -L
 echo "Resetting hadoop"
 hdfs namenode -format
 echo "Starting HDFS"
