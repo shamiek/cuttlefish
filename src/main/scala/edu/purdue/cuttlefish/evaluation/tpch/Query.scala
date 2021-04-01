@@ -125,6 +125,7 @@ object Query {
             val totalClientSide = (System.nanoTime() - startClientSide)/ 1000000000.0d
             outputResults(results)
 
+            writeTimeToFile((queryPath, elapsed, totalClientSide))
             times = times :+ (queryPath, elapsed, totalClientSide)
             println()
         }
@@ -136,6 +137,15 @@ object Query {
         val outFile = new File("TIMES.txt")
         val bw = new BufferedWriter(new FileWriter(outFile, true))
         times.foreach {
+            case (key, elapsed, clientSide) => bw.write(f"${key}%s\t${elapsed}%1.8f\t${clientSide}%1.8f\n")
+//            case (key, value) => bw.write(f"${value}%1.8f\n")
+        }
+        bw.close()
+    }
+    def writeTimeToFile(time: (String, Double, Double)): Unit = {
+        val outFile = new File("TIMES.txt")
+        val bw = new BufferedWriter(new FileWriter(outFile, true))
+        time match {
             case (key, elapsed, clientSide) => bw.write(f"${key}%s\t${elapsed}%1.8f\t${clientSide}%1.8f\n")
 //            case (key, value) => bw.write(f"${value}%1.8f\n")
         }
@@ -161,6 +171,6 @@ object Query {
         val spark = SparkConfig.getDefaultSpark(appName)
 
         val times = executeQueries(spark, executionMode, queryNum)
-        writeTimes(times)
+//        writeTimes(times)
     }
 }

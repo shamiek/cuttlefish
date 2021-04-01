@@ -4,7 +4,7 @@ import org.apache.spark.sql.SparkSession
 
 object Config {
     val CUTTLEFISH_HOME = sys.env("CUTTLEFISH_HOME")
-    // resovle this from /etc/hosts to make life easy
+    // resolve this from /etc/hosts to make life easy
     val MASTER = "master"
     val SPARK_PORT = "7077"
     val HDFS_PORT = "9000"

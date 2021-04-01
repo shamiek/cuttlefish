@@ -29,13 +29,17 @@ object Config {
         ExecutionMode.CUTTLEFISH -> "cuttlefish"
     )
 
-    def getPath(executionMode: ExecutionMode.Value, name: String) = {
-        val dir = if (SparkConfig.fileSystem == SparkConfig.FileSystem.LOCAL)
+    def getPath(executionMode: ExecutionMode.Value, name: String, fsChosen: Int, pathSuffix: String) = {
+//        val dir = if (SparkConfig.fileSystem == SparkConfig.FileSystem.LOCAL) {
+        val dir = if (fsChosen == 0) {
 //            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
 //            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
-            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL")
-        else
-            SparkConfig.getHDFSPath("/tpch")
+//            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL")
+            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + pathSuffix)
+
+        } else
+//            SparkConfig.getHDFSPath("/tpch")
+            SparkConfig.getHDFSPath(pathSuffix)
 
         dir + "/" + name + "." + executionModeMap(executionMode)
     }

@@ -8,7 +8,8 @@ import org.apache.spark.sql.functions._
 
 object LoadTables {
 
-    def saveParquet(spark: SparkSession, tableName: String) = {
+//    val hdfsPath = ""
+    def saveParquet(spark: SparkSession, tableName: String, fsChosen: Int, pathSuffix: String) = {
         import spark.implicits._
 
         val split = spark
@@ -82,11 +83,18 @@ object LoadTables {
         // write using parquet format
         df.write
           .mode("overwrite")
-          .parquet(Config.getPath(ExecutionMode.PTXT, tableName))
+          .parquet(Config.getPath(ExecutionMode.PTXT, tableName, fsChosen, pathSuffix))
     }
 
     def main(args: Array[String]): Unit = {
         val spark = SparkConfig.getDefaultSpark("Load TPC-H Tables")
-        Config.TABLE_NAMES.foreach(name => saveParquet(spark, name))
+
+        // let's say 1 is HDFS, 0 is Local
+        val fsChosen = if (args.length > 0) args(0).toInt else 0
+
+        // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL"
+        val pathSuffix = if (args.length > 1) args(1) else "/pathSuffix/not/entered"
+
+        Config.TABLE_NAMES.foreach(name => saveParquet(spark, name, fsChosen, pathSuffix))
     }
 }
