@@ -13,22 +13,27 @@ object EncryptTables {
         UDF.encrypt(encOptions.scheme, encOptions.f)
     }
 
-    def encTable(spark: SparkSession, tableName: String) = {
+    def encTable(spark: SparkSession, tableName: String, fsChosen: Int, pathSuffix: String) = {
 
         println("Encrypting " + tableName)
 
-        val tableDF = getTable(spark, ExecutionMode.PTXT, tableName)
+        val tableDF = getTable(spark, ExecutionMode.PTXT, tableName, fsChosen, pathSuffix)
         val tableColumns = tableDF.columns
 
         tableDF
           .select(tableColumns.map(c => encColumn(c)(col(c)).alias(c)): _*)
           .write
           .mode("overwrite")
-          .parquet(getPath(ExecutionMode.PHE, tableName))
+          .parquet(getPath(ExecutionMode.PHE, tableName, fsChosen, pathSuffix))
     }
 
     def main(args: Array[String]): Unit = {
         val spark = SparkConfig.getDefaultSpark("Encrypt TPC-H Tables", "local")
-        TABLE_NAMES.foreach(tableName => encTable(spark, tableName))
+        // let's say 1 is HDFS, 0 is Local
+        val fsChosen = if (args.length > 0) args(0).toInt else 0
+
+        // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
+        val pathSuffix = if (args.length > 1) args(1) else "/pathSuffix/not/entered"
+        TABLE_NAMES.foreach(tableName => encTable(spark, tableName, fsChosen, pathSuffix))
     }
 }

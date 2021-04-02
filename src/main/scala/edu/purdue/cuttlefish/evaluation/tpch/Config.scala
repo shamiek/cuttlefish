@@ -35,7 +35,7 @@ object Config {
 //            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
 //            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/10MBtBL")
 //            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL")
-            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + pathSuffix)
+            SparkConfig.getLocalPath(SparkConfig.CUTTLEFISH_HOME + "/" + pathSuffix)
 
         } else
 //            SparkConfig.getHDFSPath("/tpch")
@@ -44,8 +44,8 @@ object Config {
         dir + "/" + name + "." + executionModeMap(executionMode)
     }
 
-    def getTable(spark: SparkSession, executionMode: ExecutionMode.Value, tableName: String) = {
-        val path = getPath(executionMode, tableName)
+    def getTable(spark: SparkSession, executionMode: ExecutionMode.Value, tableName: String, fsChosen: Int, pathSuffix: String) = {
+        val path = getPath(executionMode, tableName, fsChosen, pathSuffix)
         spark.read.parquet(path)
     }
 }

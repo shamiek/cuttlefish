@@ -14,7 +14,7 @@ object LoadTables {
 
         val split = spark
           .sparkContext
-          .textFile(Config.getPath(ExecutionMode.TXT, tableName))
+          .textFile(Config.getPath(ExecutionMode.TXT, tableName, fsChosen, pathSuffix))
           .map(_.split('|'))
 
         val df = tableName match {
@@ -92,7 +92,7 @@ object LoadTables {
         // let's say 1 is HDFS, 0 is Local
         val fsChosen = if (args.length > 0) args(0).toInt else 0
 
-        // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/tblSilo/100MBtBL"
+        // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
         val pathSuffix = if (args.length > 1) args(1) else "/pathSuffix/not/entered"
 
         Config.TABLE_NAMES.foreach(name => saveParquet(spark, name, fsChosen, pathSuffix))

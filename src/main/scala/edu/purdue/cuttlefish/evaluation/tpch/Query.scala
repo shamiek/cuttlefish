@@ -16,14 +16,15 @@ import scala.collection.GenSeq
   */
 
 abstract class Query(spark: SparkSession, executionMode: ExecutionMode.Value) {
-    lazy val customer: DataFrame = getTable(spark, executionMode, "customer")
-    lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem")
-    lazy val nation: DataFrame = getTable(spark, executionMode, "nation")
-    lazy val order: DataFrame = getTable(spark, executionMode, "orders")
-    lazy val region: DataFrame = getTable(spark, executionMode, "region")
-    lazy val supplier: DataFrame = getTable(spark, executionMode, "supplier")
-    lazy val part: DataFrame = getTable(spark, executionMode, "part")
-    lazy val partsupp: DataFrame = getTable(spark, executionMode, "partsupp")
+    import Query._
+    lazy val customer: DataFrame = getTable(spark, executionMode, "customer", fsChosen, pathSuffix)
+    lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem", fsChosen, pathSuffix)
+    lazy val nation: DataFrame = getTable(spark, executionMode, "nation", fsChosen, pathSuffix)
+    lazy val order: DataFrame = getTable(spark, executionMode, "orders", fsChosen, pathSuffix)
+    lazy val region: DataFrame = getTable(spark, executionMode, "region", fsChosen, pathSuffix)
+    lazy val supplier: DataFrame = getTable(spark, executionMode, "supplier", fsChosen, pathSuffix)
+    lazy val part: DataFrame = getTable(spark, executionMode, "part", fsChosen, pathSuffix)
+    lazy val partsupp: DataFrame = getTable(spark, executionMode, "partsupp", fsChosen, pathSuffix)
 
     /**
       * Get the name of the class excluding dollar signs and package
@@ -46,14 +47,15 @@ abstract class Query(spark: SparkSession, executionMode: ExecutionMode.Value) {
 }
 
 abstract class QueryMod(spark: SparkSession, executionMode: ExecutionMode.Value) {
-    lazy val customer: DataFrame = getTable(spark, executionMode, "customer")
-    lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem")
-    lazy val nation: DataFrame = getTable(spark, executionMode, "nation")
-    lazy val order: DataFrame = getTable(spark, executionMode, "orders")
-    lazy val region: DataFrame = getTable(spark, executionMode, "region")
-    lazy val supplier: DataFrame = getTable(spark, executionMode, "supplier")
-    lazy val part: DataFrame = getTable(spark, executionMode, "part")
-    lazy val partsupp: DataFrame = getTable(spark, executionMode, "partsupp")
+    import Query._
+    lazy val customer: DataFrame = getTable(spark, executionMode, "customer", fsChosen, pathSuffix)
+    lazy val lineitem: DataFrame = getTable(spark, executionMode, "lineitem", fsChosen, pathSuffix)
+    lazy val nation: DataFrame = getTable(spark, executionMode, "nation", fsChosen, pathSuffix)
+    lazy val order: DataFrame = getTable(spark, executionMode, "orders", fsChosen, pathSuffix)
+    lazy val region: DataFrame = getTable(spark, executionMode, "region", fsChosen, pathSuffix)
+    lazy val supplier: DataFrame = getTable(spark, executionMode, "supplier", fsChosen, pathSuffix)
+    lazy val part: DataFrame = getTable(spark, executionMode, "part", fsChosen, pathSuffix)
+    lazy val partsupp: DataFrame = getTable(spark, executionMode, "partsupp", fsChosen, pathSuffix)
 //    lazy val interimQ01 = getIntrmTable()
 
     /**
@@ -86,7 +88,8 @@ object Query {
     def outputResults(results: GenSeq[Row]): Unit = {
         results.foreach(row => println(row.mkString("\t")))
     }
-
+    var fsChosen: Int = 1;
+    var pathSuffix: String = "no/path/suffix";
     /**
       * Execute 1 or more queries
       *
@@ -164,8 +167,13 @@ object Query {
         } else
             ExecutionMode.PTXT
 
-        val queryNum = if (args.length > 1) args(1).toInt else 0
+        // let's say 1 is HDFS, 0 is Local
+        fsChosen = if (args.length > 1) args(1).toInt else 0
 
+        // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
+        pathSuffix = if (args.length > 2) args(2) else "/pathSuffix/not/entered"
+
+        val queryNum = if (args.length > 3) args(3).toInt else 0
 
         val appName = if (queryNum == 0) "TPC-H" else "TPC-H Q" + queryNum
         val spark = SparkConfig.getDefaultSpark(appName)
