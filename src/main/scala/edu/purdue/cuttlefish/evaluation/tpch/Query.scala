@@ -1,12 +1,12 @@
 package edu.purdue.cuttlefish.evaluation.tpch
 
 import java.io.{BufferedWriter, File, FileWriter}
-
 import edu.purdue.cuttlefish.evaluation.tpch.Config.{ExecutionMode, getTable}
 import edu.purdue.cuttlefish.spark.{Config => SparkConfig}
 import org.apache.spark.sql._
 
 import scala.collection.GenSeq
+import scala.sys.exit
 
 /**
   * Parent class for TPC-H queries.
@@ -83,6 +83,8 @@ abstract class PtxtQuery(spark: SparkSession) extends Query(spark, ExecutionMode
 
 abstract class PheQuery(spark: SparkSession) extends QueryMod(spark, ExecutionMode.PHE) {}
 
+case class CustomException(s: String)  extends Exception(s)
+
 object Query {
 
     def outputResults(results: GenSeq[Row]): Unit = {
@@ -156,6 +158,17 @@ object Query {
     }
 
     def main(args: Array[String]): Unit = {
+        if (args.length == 0) {
+            println(" Usage eg.: ${SPARK_HOME}/bin/spark-submit" +
+              " --class edu.purdue.cuttlefish.evaluation.tpch.Query" +
+              " ${CUTTLEFISH_HOME}/target/cuttlefish-0.0.1-SNAPSHOT.jar" +
+              " phe 0 resources/data_input/tblSilo/10MBtBL")
+            throw  new CustomException(" Usage eg.: ${SPARK_HOME}/bin/spark-submit " +
+              "--master yarn --deploy-mode client" +
+              " --class edu.purdue.cuttlefish.evaluation.tpch.Query" +
+              " ${CUTTLEFISH_HOME}/target/cuttlefish-0.0.1-SNAPSHOT.jar" +
+              " phe 0 resources/data_input/tblSilo/10MBtBL")
+        }
         val executionMode = if (args.length > 0) {
             val mode = args(0)
             if (mode == "ptxt")

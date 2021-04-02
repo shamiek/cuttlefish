@@ -89,11 +89,19 @@ object LoadTables {
     def main(args: Array[String]): Unit = {
         val spark = SparkConfig.getDefaultSpark("Load TPC-H Tables")
 
+        if (args.length == 0) {
+            println(" Usage eg.: ${SPARK_HOME}/bin/spark-submit" +
+              "--master yarn --deploy-mode client" +
+              " --class edu.purdue.cuttlefish.evaluation.tpch.Query" +
+              " ${CUTTLEFISH_HOME}/target/cuttlefish-0.0.1-SNAPSHOT.jar" +
+              " 0 resources/data_input/tblSilo/10MBtBL")
+            throw new ArrayIndexOutOfBoundsException;
+        }
         // let's say 1 is HDFS, 0 is Local
         val fsChosen = if (args.length > 0) args(0).toInt else 0
 
         // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
-        val pathSuffix = if (args.length > 1) args(1) else "/pathSuffix/not/entered"
+        val pathSuffix = if (args.length > 1) args(1) else "pathSuffix/not/entered"
 
         Config.TABLE_NAMES.foreach(name => saveParquet(spark, name, fsChosen, pathSuffix))
     }
