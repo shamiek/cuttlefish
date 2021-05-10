@@ -34,7 +34,9 @@ object Config {
         spark
     }
 
-    def getHDFSPath(path: String) = "hdfs://" + Config.MASTER + ":" + Config.HDFS_PORT + path
+//    def getHDFSPath(path: String) = "hdfs://" + Config.MASTER + ":" + Config.HDFS_PORT + path
+    // file system prefix will be passed from core-site.xml
+    def getHDFSPath(path: String) = path
 
     def getLocalPath(path: String) = "file://" + path
 

@@ -184,7 +184,7 @@ object Query {
         fsChosen = if (args.length > 1) args(1).toInt else 0
 
         // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
-        pathSuffix = if (args.length > 2) args(2) else "/pathSuffix/not/entered"
+        pathSuffix = if (args.length > 2) args(2) else "/pathSuffix/not/entered. For Hdfs enter path relative to master"
 
         val queryNum = if (args.length > 3) args(3).toInt else 0
 
