@@ -12,7 +12,9 @@ import java.security.NoSuchProviderException;
 
 public class AESDET extends CryptoScheme {
 
-    private static final String DEFAULT_KEY_PATH = "/tmp/aes-det.sk";
+
+    private static final String DEFAULT_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/aes-det.sk");
+//    private static final String DEFAULT_KEY_PATH = "/tmp/aes-det.sk";
     private static final int BITLENGTH = 128;
     private static final String CHARSET_NAME = "UTF-8";
 

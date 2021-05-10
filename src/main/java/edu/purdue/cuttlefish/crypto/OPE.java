@@ -13,7 +13,8 @@ import java.math.BigInteger;
  */
 public class OPE extends CryptoScheme {
 
-    private static final String DEFAULT_KEY_PATH = "/tmp/ope.sk";
+//    private static final String DEFAULT_KEY_PATH = "/tmp/ope.sk";
+    private static final String DEFAULT_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/ope.sk");
     private static final int DEFAULT_CIPHERTEXT_EXTRABITS = 32;
     private static final long CTXT_BLOCKS = (long) Math.pow(2, DEFAULT_CIPHERTEXT_EXTRABITS);
 

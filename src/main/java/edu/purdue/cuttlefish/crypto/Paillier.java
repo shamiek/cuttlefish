@@ -7,8 +7,10 @@ import java.math.BigInteger;
 
 public class Paillier extends AsymPHE<BigInteger> {
 
-    private static final String DEFAULT_PUBLIC_KEY_PATH = "/tmp/paillier.pk";
-    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/paillier.sk";
+//    private static final String DEFAULT_PUBLIC_KEY_PATH = "/tmp/paillier.pk";
+    private static final String DEFAULT_PUBLIC_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/paillier.pk");
+//    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/paillier.sk";
+    private static final String DEFAULT_PRIVATE_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/paillier.sk");
 
     // load keys
     private BigInteger n2; // n squared

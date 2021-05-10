@@ -8,8 +8,10 @@ import java.math.BigInteger;
 
 public class ElGamal extends AsymPHE<ElGamalCipher> {
 
-    private static final String DEFAULT_PUBLIC_KEY_PATH = "/tmp/elgamal.pk";
-    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/elgamal.sk";
+//    private static final String DEFAULT_PUBLIC_KEY_PATH = "/tmp/elgamal.pk";
+    private static final String DEFAULT_PUBLIC_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/elgamal.pk");
+//    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/elgamal.sk";
+    private static final String DEFAULT_PRIVATE_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/elgamal.sk");
 
     private BigInteger g;
     private BigInteger h;

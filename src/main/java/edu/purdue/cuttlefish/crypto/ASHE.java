@@ -20,7 +20,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ASHE extends CryptoScheme {
 
-    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/ashe.sk";
+//    private static final String DEFAULT_PRIVATE_KEY_PATH = "/tmp/ashe.sk";
+    private static final String DEFAULT_PRIVATE_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/ashe.sk");
     private static final int KEY_BITLENGTH = 96;
     private static final Long MOD = Long.MAX_VALUE;
 

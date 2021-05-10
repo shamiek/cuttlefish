@@ -20,7 +20,8 @@ import java.util.List;
 
 public class SWP extends CryptoScheme {
 
-    private static final String DEFAULT_KEY_PATH = "/tmp/swp.sk";
+//    private static final String DEFAULT_KEY_PATH = "/tmp/swp.sk";
+    private static final String DEFAULT_KEY_PATH = System.getenv("CF_KEYS_DIR").concat("/swp.sk");
 
     // SWP encryption constructions mode. dup indicates duplicate words can exist. no dup indicates
     // duplicate words are removed before encrypting. rand indicates words are permuted before
