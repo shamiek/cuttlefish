@@ -98,10 +98,21 @@ object LoadTables {
             throw new ArrayIndexOutOfBoundsException;
         }
         // let's say 1 is HDFS, 0 is Local
-        val fsChosen = if (args.length > 0) args(0).toInt else 0
+        val fsChosen = if (args.length > 0) {
+                            println("Hdfs chosen\n")
+                            args(0).toInt
+                        }
+                        else {
+                            println("local chosen \n")
+                            0
+                        }
 
         // for local path is: SparkConfig.CUTTLEFISH_HOME + "/resources/data_input/100MB"
-        val pathSuffix = if (args.length > 1) args(1) else "pathSuffix/not/entered"
+        val pathSuffix = if (args.length > 1) {
+                                println("path suffix: " + args(1))
+                                args(1)
+                            }
+                        else "pathSuffix/not/entered"
 
         Config.TABLE_NAMES.foreach(name => saveParquet(spark, name, fsChosen, pathSuffix))
     }
