@@ -8,8 +8,8 @@ import org.apache.spark.sql.functions.col
 object EncryptTables {
 
     def encColumn(columnName: String) = {
-        println("[encColumn] Getting column: " + columnName + "\n Printing Map\n")
-        Schema.encryptOptionsMap foreach (x => println (x._1 + "-->" + x._2))
+//        println("[encColumn] Getting column: " + columnName + "\n Printing Map\n")
+//        Schema.encryptOptionsMap foreach (x => println (x._1 + "-->" + x._2))
         val encOptions = Schema.encryptOptionsMap
           .get(columnName).get
         UDF.encrypt(encOptions.scheme, encOptions.f)
