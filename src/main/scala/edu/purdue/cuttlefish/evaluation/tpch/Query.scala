@@ -222,22 +222,24 @@ object Query {
 //        times
     }
 
-    def delIfExists(someFile: File): Unit = {
+    def addLinesIfExists(someFile: File): Unit = {
         if (someFile.exists()) {
-            someFile.delete()
+            val bwTimesFile = new BufferedWriter(new FileWriter(someFile, true))
+            bwTimesFile.write(f"\n\n\n")
+            bwTimesFile.close()
         }
     }
 //    def writeAllTimes(times: List[(String, Double, Double)]): Unit = {
     def writeAllTimes(firstResult: GenSeq[Row], rawTimes: List[List[Double]], queryPath: String, avgTotalTime: Double, avgClientSide: Double, stdTotalTime: Double, stdClientSide: Double): Unit = {
 
         val timesFile  = new File("TIMES_raw.txt")
-        delIfExists(timesFile)
+        addLinesIfExists(timesFile)
         val timesStdFile  = new File("TIMES_std.txt")
-        delIfExists(timesStdFile)
+        addLinesIfExists(timesStdFile)
         val timesAvgFile  = new File("TIMES_avg.txt")
-        delIfExists(timesAvgFile)
+        addLinesIfExists(timesAvgFile)
         val outputFile = new File("OUTPUT.txt")
-        delIfExists(outputFile)
+        addLinesIfExists(outputFile)
 
         val bwTimesFile = new BufferedWriter(new FileWriter(timesFile, true))
         rawTimes.foreach(iRun => bwTimesFile.write(f"${queryPath}%s\t${iRun(0)}%1.8f\t${iRun(1)}%1.8f\n"))
