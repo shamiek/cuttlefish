@@ -223,7 +223,7 @@ object Query {
             val (firstResultRows, allRawTimes, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide) = executeQuery(query, measuredRuns)
 
             outputResults(firstResultRows)
-            writeAllTimes(firstResultRows, allRawTimes, queryPath, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide)
+            writeAllTimes(firstResultRows, allRawTimes, modeString + "." + queryName, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide)
 //            writeTimeToFile((queryPath, elapsed, totalClientSide))
 //            times = times :+ (queryPath, elapsed, totalClientSide)
             println()
