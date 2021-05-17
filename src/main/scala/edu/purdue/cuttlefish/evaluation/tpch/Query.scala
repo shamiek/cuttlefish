@@ -193,6 +193,15 @@ object Query {
 
         // record execution times
 //        var times = List[(String, Double, Double)]()
+        // Initialize files here:
+        val timesFile  = new File("TIMES_raw.txt")
+        addLinesIfExists(timesFile)
+        val timesStdFile  = new File("TIMES_std.txt")
+        addLinesIfExists(timesStdFile)
+        val timesAvgFile  = new File("TIMES_avg.txt")
+        addLinesIfExists(timesAvgFile)
+        val outputFile = new File("OUTPUT.txt")
+        addLinesIfExists(outputFile)
 
         for (queryNo <- queryFrom to queryTo) {
             val queryName = f"Q${queryNo}%02d"
@@ -211,7 +220,7 @@ object Query {
 //
 //            writeTimeToFile((queryPath, elapsed, totalClientSide))
 //            times = times :+ (queryPath, elapsed, totalClientSide)
-            val (firstResultRows, allRawTimes, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide) = executeQuery(query: QueryMod, measuredRuns: Int)
+            val (firstResultRows, allRawTimes, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide) = executeQuery(query, measuredRuns)
 
             outputResults(firstResultRows)
             writeAllTimes(firstResultRows, allRawTimes, queryPath, avgTotalTime, avgClientSide, stdTotalTime, stdClientSide)
@@ -233,13 +242,13 @@ object Query {
     def writeAllTimes(firstResult: GenSeq[Row], rawTimes: List[List[Double]], queryPath: String, avgTotalTime: Double, avgClientSide: Double, stdTotalTime: Double, stdClientSide: Double): Unit = {
 
         val timesFile  = new File("TIMES_raw.txt")
-        addLinesIfExists(timesFile)
+//        addLinesIfExists(timesFile)
         val timesStdFile  = new File("TIMES_std.txt")
-        addLinesIfExists(timesStdFile)
+//        addLinesIfExists(timesStdFile)
         val timesAvgFile  = new File("TIMES_avg.txt")
-        addLinesIfExists(timesAvgFile)
+//        addLinesIfExists(timesAvgFile)
         val outputFile = new File("OUTPUT.txt")
-        addLinesIfExists(outputFile)
+//        addLinesIfExists(outputFile)
 
         val bwTimesFile = new BufferedWriter(new FileWriter(timesFile, true))
         rawTimes.foreach(iRun => bwTimesFile.write(f"${queryPath}%s\t${iRun(0)}%1.8f\t${iRun(1)}%1.8f\n"))
