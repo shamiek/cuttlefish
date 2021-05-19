@@ -251,15 +251,15 @@ object Query {
 //        addLinesIfExists(outputFile)
 
         val bwTimesFile = new BufferedWriter(new FileWriter(timesFile, true))
-        rawTimes.foreach(iRun => bwTimesFile.write(f"${queryPath}%s\t${iRun(0)}%1.8f\t${iRun(1)}%1.8f\n"))
+        rawTimes.foreach(iRun => bwTimesFile.write(f"${queryPath}%s\t\t${iRun(0)}%1.8f\t\t${iRun(1)}%1.8f\n"))
         bwTimesFile.close()
 
         val bwTimesAvgFile = new BufferedWriter(new FileWriter(timesAvgFile, true))
-        bwTimesAvgFile.write(f"${queryPath}%s\t${avgTotalTime}%1.8f\t${avgClientSide}%1.8f\n")
+        bwTimesAvgFile.write(f"${queryPath}%s\t\t${avgTotalTime}%1.8f\t\t${avgClientSide}%1.8f\n")
         bwTimesAvgFile.close()
 
         val bwTimesStdFile = new BufferedWriter(new FileWriter(timesStdFile, true))
-        bwTimesStdFile.write(f"${queryPath}%s\t${stdTotalTime}%1.8f\t${stdClientSide}%1.8f\n")
+        bwTimesStdFile.write(f"${queryPath}%s\t\t${stdTotalTime}%1.8f\t\t${stdClientSide}%1.8f\n")
         bwTimesStdFile.close()
 
         val bwOutputFile = new BufferedWriter(new FileWriter(outputFile, true))
