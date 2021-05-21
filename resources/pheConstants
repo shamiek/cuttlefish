@@ -1,0 +1,91 @@
+This file contains a description about the PHE constans used in TPC-H benchmark
+HYDRA uses PTXT in place of SWP currently. Also check if there is any difference
+between OPE and OPES
+
+Q01 l_shipdate			OPES	String	"1998-09-02" 			filter(<=)
+
+Q02 r_name 				SWP 	String	"EUROPE"				filter(==)
+Q02 p_size 				OPE 	Long	15						filter(==)
+Q02 p_type 				SWP		String  endsWith("BRASS")		filter(endsWith)
+
+Q03 c_mktsegment 		SWP 	String "BUILDING"				filter(==)
+Q03 o_orderdate	 		OPES 	String "1995-03-15"				filter(<)
+Q03 l_shipdate	 		OPES 	String "1995-03-15"				filter(>)
+
+Q04 o_orderdate	 		OPES 	String "1993-07-01"				filter(>=)
+Q04 o_orderdate	 		OPES 	String "1993-10-01"				filter(<)
+
+Q05 o_orderdate			OPES	String	"1995-01-01"			filter(<)
+Q05 o_orderdate			OPES	String	"1994-01-01"			filter(>)
+Q05 r_name 				SWP		String	"ASIA"					filter(==)
+
+Q06 l_shipdate	 		OPES 	String "1994-01-01"				filter(>=)
+Q06 l_shipdate	 		OPES 	String "1995-01-01"				filter(<)
+
+Q07 n_name 				OPES 	String "FRANCE"					filter(==)
+Q07 n_name 				OPES	String "GERMANY"				filter(==)
+Q07 l_shipdate	 		OPES 	String "1995-01-01"				filter(>=)
+Q07 l_shipdate	 		OPES 	String "1996-12-31"				filter(<=)
+
+Q08 r_name 				SWP		String	"AMERICA"				filter(==)
+Q08 n_name 				OPES 	String "BRAZIL"					select
+Q08 o_orderdate	 		OPES 	String "1995-01-01"				filter(>=)
+Q08 o_orderdate	 		OPES 	String "1996-12-31"				filter(<=)
+Q08 p_type 				SWP 	String  "ECONOMY ANODIZED STEEL"	filter(==)
+
+Q09 p_name				SWP 	String	"green"					filter(contains(green))
+
+Q10 l_returnflag		OPES 	String "R"						filter(==)
+Q10 o_orderdate	 		OPES 	String "1993-10-01"				filter(>=)
+Q10 o_orderdate	 		OPES 	String "1994-10-01"				filter(<)
+
+Q11 n_name				OPES 	String "GERMANY" 				filter(==)
+
+Q12 l_shipmode 			OPES 	String "MAIL" 					filter(==)
+Q12 l_shipmode 			OPES 	String "SHIP" 					filter(==)
+Q12 l_receiptdate		OPES	String	"1995-01-01" 			filter(<)
+Q12 l_receiptdate		OPES	String	"1994-01-01" 			filter(>=)
+Q12 o_orderpriority 	OPES	String	"1-URGENT" "2-HIGH" 	filter ==, !=
+
+Q13 o_comment			SWP		String	matches(".*special.*requests.*") join()
+
+Q14 l_shipdate			OPES	String	"1995-09-01" join( >=)
+Q14 l_shipdate			OPES	String	"1995-10-01" join( < )
+Q14 p_type 				SWP		String  startsWith("PROMO")
+
+Q15 l_shipdate			OPES	String	"1996-01-01" filter( >=)
+Q15 l_shipdate			OPES	String	"1996-04-01" filter( < )
+
+Q16 p_brand				OPES	String	"Brand#45" filter(=!=)
+Q16 p_type 				SWP		String  startsWith("MEDIUM POLISHED")
+Q16 p_size				OPE 	Long	regex match (49|14|23|45|19|3|36|9)
+Q16 s_comment			SWP		String	matches(".*Customer.*Complaints.*")
+
+Q17 p_brand				OPES	String	"Brand#23" filter(==)
+Q17 p_container			SWP		String	"MED BOX" filter(==)
+
+Q18 none
+
+Q19 p_container			SWP		String	matches("SM CASE|SM BOX|SM PACK|SM PKG") filter(==)
+-do-
+-do-
+Q19 l_shipmode			OPES 	String "AIR" filter ===
+-do-
+Q19 l_shipinstruct		OPES 	String "DELIVER IN PERSON" filter ===
+Q19 p_brand				OPES	String	"Brand#12" filter(==)
+Q19 p_brand				OPES	String	"Brand#23" filter(==)
+-do-
+Q19 p_size				OPE 	Long	filter (>=, <=)
+-do-
+-do-
+
+Q20 l_shipdate			OPES	String	"1994-01-01" filter( >=)
+Q20 l_shipdate			OPES	String	"1995-01-01" filter( <= )
+Q20 p_name				SWP 	String	filter(startsWith("forest"))
+
+Q21 o_orderstatus		OPES	String	"F"				filter(==)
+Q21 n_name				OPES	String 	"SAUDI ARABIA"	filter(==)
+
+
+Q22 c_country_code		SWP		String	matches("13|31|23|29|30|18|17") filter
+Q22 c_account_bal		OPE 	Double	0.0
