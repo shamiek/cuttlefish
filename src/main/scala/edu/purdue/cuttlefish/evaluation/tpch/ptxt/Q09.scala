@@ -12,10 +12,10 @@ class Q09(spark: SparkSession) extends PtxtQuery(spark) {
         val linePart = part
           .filter($"p_name".contains("green"))
           .join(lineitem, $"p_partkey" === lineitem("l_partkey"))
-
+    // get number of rows at this point, verify with phe to see filter works correctly
         val natSup = nation
           .join(supplier, $"n_nationkey" === supplier("s_nationkey"))
-
+    // here or after the join below on line 23, perfect place for ASHE over Paillier
         val q = linePart
           .join(natSup, $"l_suppkey" === natSup("s_suppkey"))
           .join(partsupp, $"l_suppkey" === partsupp("ps_suppkey")

@@ -16,6 +16,7 @@ class Q02(spark: SparkSession) extends PtxtQuery(spark) {
           .join(partsupp, supplier("s_suppkey") === partsupp("ps_suppkey"))
         //.select($"ps_partkey", $"ps_supplycost", $"s_acctbal", $"s_name", $"n_name",
         // $"s_address", $"s_phone", $"s_comment")
+        // check number of rows
 
         val brass = part.filter(part("p_size") === 15 && part("p_type").endsWith("BRASS"))
           .join(europe, europe("ps_partkey") === $"p_partkey")

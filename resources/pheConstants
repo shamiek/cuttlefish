@@ -1,60 +1,62 @@
 This file contains a description about the PHE constans used in TPC-H benchmark
 HYDRA uses PTXT in place of SWP currently. Also check if there is any difference
 between OPE and OPES
+Current encrypted literals are in parenthesis.
 
-Q01 l_shipdate			OPES	String	"1998-09-02" 			filter(<=)
+Q01 l_shipdate			OPES	String	"1998-09-02"  			filter(<=) ";CCB7:C7:<><C>C@A<C@"
 
-Q02 r_name 				SWP 	String	"EUROPE"				filter(==)
-Q02 p_size 				OPE 	Long	15						filter(==)
-Q02 p_type 				SWP		String  endsWith("BRASS")		filter(endsWith)
+Q02 r_name 				SWP 	String	"EUROPE"				filter(==) "3gNYd6/WjCzbwbpZEN6tJA" ("Ud791RkkjLOllvXr4YG8lA")
+Q02 p_size 				OPE 	Long	15						filter(==)	64424509440L
+Q02 p_type 				SWP		String  endsWith("BRASS")		filter(endsWith) "EuFvEbm4Ypz4BCCcscps9Q" (".*nTzKsw9KYgOGU28uW1OEzQ")
 
-Q03 c_mktsegment 		SWP 	String "BUILDING"				filter(==)
-Q03 o_orderdate	 		OPES 	String "1995-03-15"				filter(<)
+Q03 c_mktsegment 		SWP 	String "BUILDING"				filter(==) "xH1Gcuq7fEY/jexytX/vig" ("S6Dj0FxJfNlB2qPAaj+Deg")
+Q03 o_orderdate	 		OPES 	String "1995-03-15"				filter(<) ";CC?7:=7;?><C>C@A<C@" (";CC?7:=7;?><C>C@A<C@")
 Q03 l_shipdate	 		OPES 	String "1995-03-15"				filter(>)
 
-Q04 o_orderdate	 		OPES 	String "1993-07-01"				filter(>=)
-Q04 o_orderdate	 		OPES 	String "1993-10-01"				filter(<)
+Q04 o_orderdate	 		OPES 	String "1993-07-01"				filter(>=)	";CC=7:A7:;><C>C@A<C@" (";CC=7:A7:;><C>C@A<C@")
+Q04 o_orderdate	 		OPES 	String "1993-10-01"				filter(<)	";CC=7;:7:;><C>C@A<C@" (";CC=7;:7:;><C>C@A<C@")
 
-Q05 o_orderdate			OPES	String	"1995-01-01"			filter(<)
-Q05 o_orderdate			OPES	String	"1994-01-01"			filter(>)
-Q05 r_name 				SWP		String	"ASIA"					filter(==)
+Q05 o_orderdate			OPES	String	"1995-01-01"			filter(<)	";CC?7:;7:;><C>C@A<C@" (";CC?7:;7:;><C>C@A<C@")
+Q05 o_orderdate			OPES	String	"1994-01-01"			filter(>)	";CC>7:;7:;><C>C@A<C@" (";CC>7:;7:;><C>C@A<C@")
+Q05 r_name 				SWP		String	"ASIA"					filter(==) "EtmywjACFVPPLvOht7cssA" ("nQQXYIbwFcyxebwT4EMwjA")
 
-Q06 l_shipdate	 		OPES 	String "1994-01-01"				filter(>=)
-Q06 l_shipdate	 		OPES 	String "1995-01-01"				filter(<)
+Q06 l_shipdate	 		OPES 	String "1994-01-01"				filter(>=)	";CC>7:;7:;><C>C@A<C@"	(";CC>7:;7:;><C>C@A<C@")
+Q06 l_shipdate	 		OPES 	String "1995-01-01"				filter(<)	";CC?7:;7:;><C>C@A<C@"	(";CC?7:;7:;><C>C@A<C@")
 
-Q07 n_name 				OPES 	String "FRANCE"					filter(==)
-Q07 n_name 				OPES	String "GERMANY"				filter(==)
-Q07 l_shipdate	 		OPES 	String "1995-01-01"				filter(>=)
-Q07 l_shipdate	 		OPES 	String "1996-12-31"				filter(<=)
+Q07 n_name 				OPES 	String "FRANCE"					filter(==) 	"P\KXMO><C>C@A<C@"		("P\\KXMO><C>C@A<C@")
+Q07 n_name 				OPES	String "GERMANY"				filter(==)	"QO\WKXc><C>C@A<C@"		("QO\\WKXc><C>C@A<C@")
+Q07 l_shipdate	 		OPES 	String "1995-01-01"				filter(>=)	";CC?7:;7:;><C>C@A<C@"	(";CC?7:;7:;><C>C@A<C@")
+Q07 l_shipdate	 		OPES 	String "1996-12-31"				filter(<=)	";CC@7;<7=;><C>C@A<C@"	(";CC@7;<7=;><C>C@A<C@")
 
-Q08 r_name 				SWP		String	"AMERICA"				filter(==)
-Q08 n_name 				OPES 	String "BRAZIL"					select
-Q08 o_orderdate	 		OPES 	String "1995-01-01"				filter(>=)
-Q08 o_orderdate	 		OPES 	String "1996-12-31"				filter(<=)
-Q08 p_type 				SWP 	String  "ECONOMY ANODIZED STEEL"	filter(==)
+Q08 r_name 				SWP		String	"AMERICA"				filter(==)	"B1HHkegydbgGF9VG1XQ/Ew" ("iIxiM17AdSd4QJr0L0MMMQ")
+Q08 n_name 				OPES 	String "BRAZIL"					select		"L\KdSV><C>C@A<C@"		("L\KdSV><C>C@A<C@")
+Q08 o_orderdate	 		OPES 	String "1995-01-01"				filter(>=)	";CC?7:;7:;><C>C@A<C@"	(";CC@7;<7=;><C>C@A<C@")
+Q08 o_orderdate	 		OPES 	String "1996-12-31"				filter(<=)	";CC@7;<7=;><C>C@A<C@"	(";CC?7:;7:;><C>C@A<C@")
+Q08 p_type 				SWP 	String  "ECONOMY ANODIZED STEEL"	filter(==) "IQ+06Gbk+j1OevXPQyeL5w 9pA5czXLpckT0odmboO9Pg 64FYZ/fh2BjS92glW+xCkA" ("rtIRStAW+qIwLbp9XtpJ4A mUjI1hyDk3hNbqQS4RzLIQ QN9MIW0yQ0+F/MzHPEX4ig")
 
-Q09 p_name				SWP 	String	"green"					filter(contains(green))
+Q09 p_name				SWP 	String	"green"					filter(contains(green))	"CU1qi/3Abiczc2pUr3Aucg"	(".*hpDPKUsybrhNJCXm5oHqPA.*")
 
-Q10 l_returnflag		OPES 	String "R"						filter(==)
-Q10 o_orderdate	 		OPES 	String "1993-10-01"				filter(>=)
-Q10 o_orderdate	 		OPES 	String "1994-10-01"				filter(<)
+Q10 l_returnflag		OPES 	String "R"						filter(==)	"\\><C>C@A<C@"			("\\><C>C@A<C@")
+Q10 o_orderdate	 		OPES 	String "1994-01-01"				filter(>=)	";CC>7:;7:;><C>C@A<C@"	(";CC>7:;7:;><C>C@A<C@")
+Q10 o_orderdate	 		OPES 	String "1993-10-01"				filter(<)	";CC=7;:7:;><C>C@A<C@"	("")
 
-Q11 n_name				OPES 	String "GERMANY" 				filter(==)
+Q11 n_name				OPES 	String "GERMANY" 				filter(==) "QO\\WKXc><C>C@A<C@" 	("QO\\WKXc><C>C@A<C@")
 
-Q12 l_shipmode 			OPES 	String "MAIL" 					filter(==)
-Q12 l_shipmode 			OPES 	String "SHIP" 					filter(==)
-Q12 l_receiptdate		OPES	String	"1995-01-01" 			filter(<)
-Q12 l_receiptdate		OPES	String	"1994-01-01" 			filter(>=)
-Q12 o_orderpriority 	OPES	String	"1-URGENT" "2-HIGH" 	filter ==, !=
+Q12 l_shipmode 			OPES 	String "MAIL" 					filter(==) 	"WKSV><C>C@A<C@"		("WKSV><C>C@A<C@")
+Q12 l_shipmode 			OPES 	String "SHIP" 					filter(==) 	"]RSZ><C>C@A<C@"		("]RSZ><C>C@A<C@")
+Q12 l_receiptdate		OPES	String	"1994-01-01" 			filter(>=)	";CC>7:;7:;><C>C@A<C@"	(";CC>7:;7:;><C>C@A<C@")
+Q12 l_receiptdate		OPES	String	"1995-01-01" 			filter(<)	";CC?7:;7:;><C>C@A<C@"	(";CC?7:;7:;><C>C@A<C@")
+Q12 o_orderpriority 	OPES	String	"1-URGENT"			 	filter(==)	";7_\\QOX^><C>C@A<C@"	(";7_\\QOX^><C>C@A<C@")
+Q12 o_orderpriority 	OPES	String	"2-HIGH" 				filter(!=)	"<7RSQR><C>C@A<C@"		("<7RSQR><C>C@A<C@")
 
-Q13 o_comment			SWP		String	matches(".*special.*requests.*") join()
+Q13 o_comment			SWP		String	matches(".*special.*requests.*") join() ".*RUO+QXFt6Kp3SKhoL+5DEA.*Sb0cn7cnvK0xRLd3nuyaDQ.*" (".*RUO+QXFt6Kp3SKhoL+5DEA.*Sb0cn7cnvK0xRLd3nuyaDQ.*")
 
-Q14 l_shipdate			OPES	String	"1995-09-01" join( >=)
-Q14 l_shipdate			OPES	String	"1995-10-01" join( < )
-Q14 p_type 				SWP		String  startsWith("PROMO")
+Q14 l_shipdate			OPES	String	"1995-09-01" join( >=) 	";CC?7:C7:;><C>C@A<C@" (";CC?7:C7:;><C>C@A<C@")
+Q14 l_shipdate			OPES	String	"1995-10-01" join( < )	";CC?7;:7:;><C>C@A<C@" (";CC?7;:7:;><C>C@A<C@")
+Q14 p_type 				SWP		String  startsWith("PROMO") "1MSu90beG2zKid3zn4PyuQ.*" ("1MSu90beG2zKid3zn4PyuQ.*")
 
-Q15 l_shipdate			OPES	String	"1996-01-01" filter( >=)
-Q15 l_shipdate			OPES	String	"1996-04-01" filter( < )
+Q15 l_shipdate			OPES	String	"1996-01-01" filter( >=) ";CC@7:;7:;><C>C@A<C@" (";CC@7:;7:;><C>C@A<C@")
+Q15 l_shipdate			OPES	String	"1996-04-01" filter( < ) ";CC@7:>7:;><C>C@A<C@"	(";CC@7:>7:;><C>C@A<C@")
 
 Q16 p_brand				OPES	String	"Brand#45" filter(=!=)
 Q16 p_type 				SWP		String  startsWith("MEDIUM POLISHED")
