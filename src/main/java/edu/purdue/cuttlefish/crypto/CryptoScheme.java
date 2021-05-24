@@ -48,7 +48,7 @@ public abstract class CryptoScheme {
         if (this.publicKeyPath == null)
             throw new RuntimeException("Public key path cannot be null");
 
-        // if only public key path is given then the public key must exist, it cannot be created since a public key without a private key is useless.
+        // if only public key path is given then the public key must exist, it cannot be created since a public key without a private key is useless/pointless.
         if (this.privateKeyPath == null && !keysExist())
             throw new RuntimeException("Could not find public key");
 

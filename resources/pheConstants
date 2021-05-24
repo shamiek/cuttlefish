@@ -58,36 +58,54 @@ Q14 p_type 				SWP		String  startsWith("PROMO") "1MSu90beG2zKid3zn4PyuQ.*" ("1MS
 Q15 l_shipdate			OPES	String	"1996-01-01" filter( >=) ";CC@7:;7:;><C>C@A<C@" (";CC@7:;7:;><C>C@A<C@")
 Q15 l_shipdate			OPES	String	"1996-04-01" filter( < ) ";CC@7:>7:;><C>C@A<C@"	(";CC@7:>7:;><C>C@A<C@")
 
-Q16 p_brand				OPES	String	"Brand#45" filter(=!=)
-Q16 p_type 				SWP		String  startsWith("MEDIUM POLISHED")
-Q16 p_size				OPE 	Long	regex match (49|14|23|45|19|3|36|9)
-Q16 s_comment			SWP		String	matches(".*Customer.*Complaints.*")
+Q16 p_brand				OPES	String	"Brand#45" filter(=!=) "L|kxn->?><C>C@A<C@" ("L|kxn->?><C>C@A<C@")
+Q16 p_type 				SWP		String  startsWith("MEDIUM POLISHED") "0vzF8Nn5ijOeECVwCBBYAw zo2IdjuOtKv0hJ7T3Nzzxg.*" ("0vzF8Nn5ijOeECVwCBBYAw zo2IdjuOtKv0hJ7T3Nzzxg.*")
+Q16 p_size				OPE 	Long	regex match (49|14|23|45|19|3|36|9) 210453397504L||60129542144L||98784247808L||193273528320L||81604378624L||12884901888L||154618822656L||38654705664L  (210453397504L||60129542144L||98784247808L||193273528320L||81604378624L||12884901888L||154618822656L||38654705664L)
+Q16 s_comment			SWP		String	matches(".*Customer.*Complaints.*") ".*eA7o8g9WHLoLZmmn0u7OyA.*IqMTH8EgGFFaAylyrhNirA.*" (".*eA7o8g9WHLoLZmmn0u7OyA.*IqMTH8EgGFFaAylyrhNirA.*")
 
-Q17 p_brand				OPES	String	"Brand#23" filter(==)
-Q17 p_container			SWP		String	"MED BOX" filter(==)
+Q17 p_brand				OPES	String	"Brand#23" filter(==) "L|kxn-<=><C>C@A<C@" ("L|kxn-<=><C>C@A<C@")
+Q17 p_container			SWP		String	"MED BOX" filter(==) "M5S+HSkcupNozgLerNTj4g HqNHlONRA/Wamp6l558RYA" ("M5S+HSkcupNozgLerNTj4g HqNHlONRA/Wamp6l558RYA")
 
 Q18 none
 
 Q19 p_container			SWP		String	matches("SM CASE|SM BOX|SM PACK|SM PKG") filter(==)
--do-
--do-
-Q19 l_shipmode			OPES 	String "AIR" filter ===
--do-
-Q19 l_shipinstruct		OPES 	String "DELIVER IN PERSON" filter ===
-Q19 p_brand				OPES	String	"Brand#12" filter(==)
-Q19 p_brand				OPES	String	"Brand#23" filter(==)
--do-
-Q19 p_size				OPE 	Long	filter (>=, <=)
--do-
--do-
+"j5iMixWnn5x0jziIs+LIMw zweRRknThCG9alf3uLgmSw|j5iMixWnn5x0jziIs+LIMw HqNHlONRA/Wamp6l558RYA|j5iMixWnn5x0jziIs+LIMw 59ElEvfse3bpfL8mDgNl1Q|j5iMixWnn5x0jziIs+LIMw DgCRF3ByBgdYx7UgL8zuCA" ("j5iMixWnn5x0jziIs+LIMw zweRRknThCG9alf3uLgmSw|j5iMixWnn5x0jziIs+LIMw HqNHlONRA/Wamp6l558RYA|j5iMixWnn5x0jziIs+LIMw 59ElEvfse3bpfL8mDgNl1Q|j5iMixWnn5x0jziIs+LIMw DgCRF3ByBgdYx7UgL8zuCA")
 
-Q20 l_shipdate			OPES	String	"1994-01-01" filter( >=)
-Q20 l_shipdate			OPES	String	"1995-01-01" filter( <= )
-Q20 p_name				SWP 	String	filter(startsWith("forest"))
+-do-	"MED BAG|MED BOX|MED PKG|MED PACK" 
+"M5S+HSkcupNozgLerNTj4g WjYcceuTL8TamMs4W0RNnA|M5S+HSkcupNozgLerNTj4g HqNHlONRA/Wamp6l558RYA|M5S+HSkcupNozgLerNTj4g DgCRF3ByBgdYx7UgL8zuCA|M5S+HSkcupNozgLerNTj4g 59ElEvfse3bpfL8mDgNl1Q"
+("M5S+HSkcupNozgLerNTj4g WjYcceuTL8TamMs4W0RNnA|M5S+HSkcupNozgLerNTj4g HqNHlONRA/Wamp6l558RYA|M5S+HSkcupNozgLerNTj4g DgCRF3ByBgdYx7UgL8zuCA|M5S+HSkcupNozgLerNTj4g 59ElEvfse3bpfL8mDgNl1Q")
 
-Q21 o_orderstatus		OPES	String	"F"				filter(==)
-Q21 n_name				OPES	String 	"SAUDI ARABIA"	filter(==)
+-do-	"LG CASE|LG BOX|LG PACK|LG PKG"
+"q3yZ/Z4ftXnDa4RFs07WWw zweRRknThCG9alf3uLgmSw|q3yZ/Z4ftXnDa4RFs07WWw HqNHlONRA/Wamp6l558RYA|q3yZ/Z4ftXnDa4RFs07WWw 59ElEvfse3bpfL8mDgNl1Q|q3yZ/Z4ftXnDa4RFs07WWw DgCRF3ByBgdYx7UgL8zuCA"
+("q3yZ/Z4ftXnDa4RFs07WWw zweRRknThCG9alf3uLgmSw|q3yZ/Z4ftXnDa4RFs07WWw HqNHlONRA/Wamp6l558RYA|q3yZ/Z4ftXnDa4RFs07WWw 59ElEvfse3bpfL8mDgNl1Q|q3yZ/Z4ftXnDa4RFs07WWw DgCRF3ByBgdYx7UgL8zuCA")
+
+
+Q19 l_shipmode			OPES 	String "AIR" filter(==) "KS\\><C>C@A<C@" ("KS\\><C>C@A<C@")
+"AIR REG" "KS\\*\OQ><C>C@A<C@" ("KS\\*\\OQ><C>C@A<C@")
+Q19 l_shipinstruct		OPES 	String "DELIVER IN PERSON" filter(==) "NOVS`O\\*SX*ZO\\]YX><C>C@A<C@" ("NOVS`O\\*SX*ZO\\]YX><C>C@A<C@")
+
+Q19 p_brand				OPES	String	"Brand#12" filter(==) 	(client-side)
+Q19 p_brand				OPES	String	"Brand#23" filter(==)	(client-side)
+"Brand#34" (client-side)
+
+Q19 p_size				OPE 	Long	1	filter (>=, <=) 4294967296 (4294967296L)
+5	21474836480	(21474836480L)
+1	
+10	42949672960	(42949672960L)
+1
+15	64424509440 (64424509440L)
+
+Q20 l_shipdate			OPES	String	"1994-01-01" filter( >=) ";CC>7:;7:;><C>C@A<C@" (";CC>7:;7:;><C>C@A<C@")
+Q20 l_shipdate			OPES	String	"1995-01-01" filter( <= )	";CC?7:;7:;><C>C@A<C@" (";CC?7:;7:;><C>C@A<C@")
+Q20 p_name				SWP 	String	filter(startsWith("forest")) "U4uLFLXJ9QO0OobuIz9NKA.*" ("U4uLFLXJ9QO0OobuIz9NKA.*")
+Q20 n_name				OPES	String 	"CANADA"	filter(==) "MKXKNK><C>C@A<C@" ("MKXKNK><C>C@A<C@")
+
+Q21 o_orderstatus		OPES	String	"F"				filter(==) "P><C>C@A<C@" ("P><C>C@A<C@")
+Q21 n_name				OPES	String 	"SAUDI ARABIA"	filter(==) "]K_NS*K\KLSK><C>C@A<C@" ("]K_NS*K\\KLSK><C>C@A<C@")
 
 
 Q22 c_country_code		SWP		String	matches("13|31|23|29|30|18|17") filter
-Q22 c_account_bal		OPE 	Double	0.0
+"V3yAANiNqz1LyzvYYSxwyw|l477sBETE39tsLCBbVZCTg|Bp9+28ugqBEtcuMS+ZuqcQ|48WtugC2Rwdp36ztWVUv4A|FVKs5DCFHKZg8Qt1RqJZ1Q|MpN+bO0H6/DM0fMAIbgcyg|O0a/qH/r4k4YDEPKzG5zWA"
+("V3yAANiNqz1LyzvYYSxwyw|l477sBETE39tsLCBbVZCTg|Bp9+28ugqBEtcuMS+ZuqcQ|48WtugC2Rwdp36ztWVUv4A|FVKs5DCFHKZg8Qt1RqJZ1Q|MpN+bO0H6/DM0fMAIbgcyg|O0a/qH/r4k4YDEPKzG5zWA")
+
+Q22 c_account_bal		OPE 	Double	0.0 filter(>) 0 (0)

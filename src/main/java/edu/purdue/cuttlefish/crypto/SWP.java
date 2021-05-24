@@ -670,17 +670,20 @@ public class SWP extends CryptoScheme {
         String [] cGram = {this.encrypt(d[0])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
     }
+
     public void q05Const(String qName) {
         String [] d = {"ASIA"};
         String [] cGram = {this.encrypt(d[0])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
     }
+
     public void q08Const(String qName) {
         String [] d = {"AMERICA", "ECONOMY ANODIZED STEEL"};
         String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
         System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
     }
+
     public void q09Const(String qName) {
         String [] d = {"green"};
         String [] cGram = {this.encrypt(d[0])};
@@ -700,6 +703,40 @@ public class SWP extends CryptoScheme {
         System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
         System.out.println("match: " + this.match(cGram[0], cGram[1]));
     }
+
+    public void simpleTestOr(String qName) {
+        String ctxt = this.encrypt("AL");
+
+//        String encRegex = this.encryptRegex("5");
+        String encRegex = this.encryptRegex("TN|AL|SD");
+        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
+        System.out.println(qName + " ctxt= " + ctxt);
+        System.out.println("regex= " + encRegex);
+        System.out.println(this.decrypt(ctxt));
+    }
+
+    public void s1TestAny(String qName) {
+        String ctxt = this.encrypt("TNBBBALCCCSD");
+
+//        String encRegex = this.encryptRegex("5");
+        String encRegex = this.encryptRegex(".*TNBBBALCCCSD.*");
+        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
+        System.out.println(qName + " ctxt= " + ctxt);
+        System.out.println("regex= " + encRegex);
+        System.out.println(this.decrypt(ctxt));
+    }
+
+    public void s2TestAny(String qName) {
+        String ctxt = this.encrypt("AAA special BBB requests CCC");
+
+//        String encRegex = this.encryptRegex("5");
+        String encRegex = this.encryptRegex(".*special.*requests.*");
+        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
+        System.out.println(qName + " ctxt= " + ctxt);
+        System.out.println("regex= " + encRegex);
+        System.out.println(this.decrypt(ctxt));
+    }
+
     public void q14Const(String qName) {
         // works at the level of words, unlike the usual character level
 //        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
@@ -710,48 +747,84 @@ public class SWP extends CryptoScheme {
         System.out.println("match: " + this.match(cGram[0], cGram[1]));
     }
 
-    public void simpleTestOr(String qName) {
-        String ctxt = this.encrypt("AL");
-
-//        String encRegex = this.encryptRegex("5");
-         String encRegex = this.encryptRegex("TN|AL|SD");
-        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
-        System.out.println(qName + " ctxt= " + ctxt);
-        System.out.println("regex= " + encRegex);
-        System.out.println(this.decrypt(ctxt));
+    public void q16Const(String qName) {
+        // works at the level of words, unlike the usual character level
+//        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
+        String [] d = {"MEDIUM POLISHED", "MEDIUM POLISHED.*", "Some Customer Complaints", ".*Customer.*Complaints.*"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1]), this.encrypt(d[2]), this.encryptRegex(d[3])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tplain: " + this.decrypt(cGram[2]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tregex: " + cGram[3]);
+        System.out.println("match: " + this.match(cGram[2], cGram[3]));
     }
-    public void s1TestAny(String qName) {
-        String ctxt = this.encrypt("TNBBBALCCCSD");
 
-//        String encRegex = this.encryptRegex("5");
-         String encRegex = this.encryptRegex(".*TNBBBALCCCSD.*");
-        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
-        System.out.println(qName + " ctxt= " + ctxt);
-        System.out.println("regex= " + encRegex);
-        System.out.println(this.decrypt(ctxt));
+    public void q17Const(String qName) {
+        // works at the level of words, unlike the usual character level
+//        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
+        String [] d = {"MED BOX", "MED BOX"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
     }
-    public void s2TestAny(String qName) {
-        String ctxt = this.encrypt("AAA special BBB requests CCC");
 
-//        String encRegex = this.encryptRegex("5");
-         String encRegex = this.encryptRegex(".*special.*requests.*");
-        System.out.println(qName + "\tmatch: " + this.match(ctxt, encRegex));
-        System.out.println(qName + " ctxt= " + ctxt);
-        System.out.println("regex= " + encRegex);
-        System.out.println(this.decrypt(ctxt));
+    public void q19Const(String qName) {
+        // works at the level of words, unlike the usual character level
+//        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
+        String [] d = {"SM BOX", "SM CASE|SM BOX|SM PACK|SM PKG", "MED PKG", "MED BAG|MED BOX|MED PKG|MED PACK", "LG PACK", "LG CASE|LG BOX|LG PACK|LG PKG"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1]),
+                this.encrypt(d[2]), this.encryptRegex(d[3]),
+                this.encrypt(d[4]), this.encryptRegex(d[5])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tplain: " + this.decrypt(cGram[2]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tregex: " + cGram[3]);
+        System.out.println("match: " + this.match(cGram[2], cGram[3]));
+        System.out.println(qName + " cGram: " + cGram[4] + "\tplain: " + this.decrypt(cGram[4]));
+        System.out.println(qName + " cGram: " + cGram[4] + "\tregex: " + cGram[5]);
+        System.out.println("match: " + this.match(cGram[4], cGram[5]));
+
+    }
+
+    public void q20Const(String qName) {
+        // works at the level of words, unlike the usual character level
+//        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
+        String [] d = {"forest and something", "forest.*"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
+    }
+
+    public void q22Const(String qName) {
+        // works at the level of words, unlike the usual character level
+//        String [] d = {"all special urgent requests will be taken", ".*special.*requests.*"};
+        String [] d = {"29", "13|31|23|29|30|18|17"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
     }
 
     public static void main(String[] args) {
 
         SWP s = new SWP();
 
-//        s.q02Const("[Q02].");
-//        s.q03Const("[Q03].");
-//        s.q05Const("[Q05].");
-//        s.q08Const("[Q08].");
-//        s.q09Const("[Q09].");
+        s.q02Const("[Q02].");
+        s.q03Const("[Q03].");
+        s.q05Const("[Q05].");
+        s.q08Const("[Q08].");
+        s.q09Const("[Q09].");
         s.q13Const("[Q13].");
         s.q14Const("[Q14].");
+        s.q16Const("[Q16].");
+        s.q17Const("[Q17].");
+        s.q19Const("[Q19].");
+        s.q20Const("[Q20].");
+        s.q22Const("[Q22].");
 //        s.q13Test("[Q13].");
 //        s.simpleTestOr("simpleTest");
 //        s.s1TestAny("s1TestAny");

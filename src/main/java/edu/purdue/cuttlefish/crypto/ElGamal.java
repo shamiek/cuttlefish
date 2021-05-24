@@ -46,6 +46,7 @@ public class ElGamal extends AsymPHE<ElGamalCipher> {
 
     @Override
     public void keyGen() {
+        System.out.println("ElGamal keys not found. Generating ElGamal priv and pub keys");
         BigInteger n = BigInteger.probablePrime(BITLENGTH, RNG);
         BigInteger g = BigInteger.probablePrime(BITLENGTH, RNG);
         BigInteger x;

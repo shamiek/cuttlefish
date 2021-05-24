@@ -42,6 +42,7 @@ public class Paillier extends AsymPHE<BigInteger> {
     }
 
     public void keyGen() {
+        System.out.println("Paillier keys not found. Generating Paillier priv and pub keys");
         BigInteger p = BigInteger.probablePrime(BITLENGTH / 2, RNG);
         BigInteger q;
         do {

@@ -116,15 +116,22 @@ public class OPE extends CryptoScheme {
     }
     public void q12Const(String qName) {
         String [] d = {"MAIL", "SHIP", "1994-01-01", "1995-01-01", "1-URGENT", "2-HIGH"};
-        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1]),
-                this.encrypt(d[2]), this.encrypt(d[3]),
-                this.encrypt(d[4]), this.encrypt(d[5])};
-        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
-        System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
-        System.out.println(qName + " cGram: " + cGram[2] + "\tplain: " + this.decrypt(cGram[2]));
-        System.out.println(qName + " cGram: " + cGram[3] + "\tplain: " + this.decrypt(cGram[3]));
-        System.out.println(qName + " cGram: " + cGram[4] + "\tplain: " + this.decrypt(cGram[4]));
-        System.out.println(qName + " cGram: " + cGram[5] + "\tplain: " + this.decrypt(cGram[5]));
+//        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1]),
+//                this.encrypt(d[2]), this.encrypt(d[3]),
+//                this.encrypt(d[4]), this.encrypt(d[5])};
+//        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+//        System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
+//        System.out.println(qName + " cGram: " + cGram[2] + "\tplain: " + this.decrypt(cGram[2]));
+//        System.out.println(qName + " cGram: " + cGram[3] + "\tplain: " + this.decrypt(cGram[3]));
+//        System.out.println(qName + " cGram: " + cGram[4] + "\tplain: " + this.decrypt(cGram[4]));
+//        System.out.println(qName + " cGram: " + cGram[5] + "\tplain: " + this.decrypt(cGram[5]));
+        String [] cGram = new String[6];
+        for (int i = 0; i < d.length; i++) {
+            cGram[i] = this.encrypt(d[i]);
+        }
+        for (int i = 0; i < d.length; i++) {
+            System.out.println(qName + " cGram: " + cGram[i] + "\tplain: " + this.decrypt(cGram[i]));
+        }
     }
     public void q14Const(String qName) {
         String [] d = {"1995-09-01", "1995-10-01"};
@@ -137,6 +144,74 @@ public class OPE extends CryptoScheme {
         String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
         System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
+    }
+    public void q16Const(String qName) {
+        String d = "Brand#45";
+        String dEnc = this.encrypt(d);
+        long [] dLong = {49, 14, 23, 45, 19, 3, 36, 9};
+        long [] cGram = new long[8];
+        System.out.println(qName + " cGram: " + dEnc + "\tplain: " + this.decrypt(dEnc));
+        for (int i = 0; i < dLong.length; i++) {
+            cGram[i] = this.encrypt(dLong[i]);
+        }
+        for (int i = 0; i < dLong.length; i++) {
+            System.out.println(qName + " cGram: " + cGram[i] + "\tplain: " + this.decrypt(cGram[i]));
+        }
+        // for copying
+//        System.out.println();
+//        for (int i = 0; i < dLong.length; i++) {
+//            System.out.print(cGram[i] + "L||");
+//        }
+//        System.out.println();
+    }
+    public void q17Const(String qName) {
+        String d = "Brand#23";
+        String dEnc = this.encrypt(d);
+        System.out.println(qName + " cGram: " + dEnc + "\tplain: " + this.decrypt(dEnc));
+    }
+    public void q19Const(String qName) {
+        String [] dString = {"AIR", "AIR REG", "DELIVER IN PERSON"};
+        String [] cGramS = new String[4];
+
+        long [] dLong = {1, 5, 10, 15};
+        long [] cGramL = new long[4];
+
+        for (int i = 0; i < dString.length; i++) {
+            cGramS[i] = this.encrypt(dString[i]);
+        }
+        for (int i = 0; i < dLong.length; i++) {
+            cGramL[i] = this.encrypt(dLong[i]);
+        }
+        for (int i = 0; i < dString.length; i++) {
+            System.out.println(qName + " cGram: " + cGramS[i] + "\tplain: " + this.decrypt(cGramS[i]));
+        }
+        for (int i = 0; i < dLong.length; i++) {
+            System.out.println(qName + " cGram: " + cGramL[i] + "\tplain: " + this.decrypt(cGramL[i]));
+        }
+        // for copying
+//        System.out.println();
+//        for (int i = 0; i < dLong.length; i++) {
+//            System.out.print(cGram[i] + "L||");
+//        }
+//        System.out.println();
+    }
+    public void q20Const(String qName) {
+        String [] d = {"1994-01-01", "1995-01-01", "CANADA"};
+        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1]), this.encrypt(d[2])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tplain: " + this.decrypt(cGram[2]));
+    }
+    public void q21Const(String qName) {
+        String [] d = {"F", "SAUDI ARABIA"};
+        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1])};
+        System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
+    }
+    public void q22Const(String qName) {
+        long d = 0;
+        long dEnc = this.encrypt(d);
+        System.out.println(qName + " cGram: " + dEnc + "\tplain: " + this.decrypt(dEnc));
     }
     public static void main(String[] args) {
         OPE ope = new OPE();
@@ -156,5 +231,12 @@ public class OPE extends CryptoScheme {
         ope.q12Const("[Q12].");
         ope.q14Const("[Q14].");
         ope.q15Const("[Q15].");
+        ope.q16Const("[Q16].");
+        ope.q17Const("[Q17].");
+        ope.q19Const("[Q19].");
+        ope.q20Const("[Q20].");
+        ope.q21Const("[Q21].");
+        ope.q22Const("[Q22].");
+
     }
 }
