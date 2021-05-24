@@ -15,7 +15,8 @@ class Q03(spark: SparkSession) extends PheQuery(spark) {
         val esum = UDF.sum(Scheme.PAILLIER)
 
         val fcust = customer
-          .filter(UDF.swpMatch($"c_mktsegment", lit("S6Dj0FxJfNlB2qPAaj+Deg")))
+//          .filter(UDF.swpMatch($"c_mktsegment", lit("S6Dj0FxJfNlB2qPAaj+Deg")))
+          .filter(UDF.swpMatch($"c_mktsegment", lit("xH1Gcuq7fEY/jexytX/vig")))
 
         val forders = order
           .filter($"o_orderdate" < ";CC?7:=7;?><C>C@A<C@")

@@ -11,7 +11,8 @@ class Q02(spark: SparkSession) extends PheQuery(spark) {
         import spark.implicits._
 
         val europe = region
-          .filter(UDF.swpMatch($"r_name", lit("Ud791RkkjLOllvXr4YG8lA")))
+//          .filter(UDF.swpMatch($"r_name", lit("Ud791RkkjLOllvXr4YG8lA")))
+          .filter(UDF.swpMatch($"r_name", lit("3gNYd6/WjCzbwbpZEN6tJA")))
           .join(nation, $"r_regionkey" === nation("n_regionkey"))
           .join(supplier, $"n_nationkey" === supplier("s_nationkey"))
           .join(partsupp, supplier("s_suppkey") === partsupp("ps_suppkey"))

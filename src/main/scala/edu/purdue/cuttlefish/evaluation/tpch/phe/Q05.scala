@@ -19,7 +19,8 @@ class Q05(spark: SparkSession) extends PheQuery(spark) {
           .filter($"o_orderdate" < ";CC?7:;7:;><C>C@A<C@" && $"o_orderdate" >= ";CC>7:;7:;><C>C@A<C@")
 
         val q = region
-          .filter(UDF.swpMatch($"r_name", lit("nQQXYIbwFcyxebwT4EMwjA")))
+//          .filter(UDF.swpMatch($"r_name", lit("nQQXYIbwFcyxebwT4EMwjA")))
+          .filter(UDF.swpMatch($"r_name", lit("EtmywjACFVPPLvOht7cssA")))
           .join(nation, $"r_regionkey" === nation("n_regionkey"))
           .join(supplier, $"n_nationkey" === supplier("s_nationkey"))
           .join(lineitem, $"s_suppkey" === lineitem("l_suppkey"))

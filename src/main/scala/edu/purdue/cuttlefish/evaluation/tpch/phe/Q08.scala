@@ -23,13 +23,15 @@ class Q08(spark: SparkSession) extends PheQuery(spark) {
         }
 
         val fregion = region
-          .filter(UDF.swpMatch($"r_name", lit("iIxiM17AdSd4QJr0L0MMMQ")))
+//          .filter(UDF.swpMatch($"r_name", lit("iIxiM17AdSd4QJr0L0MMMQ")))
+          .filter(UDF.swpMatch($"r_name", lit("B1HHkegydbgGF9VG1XQ/Ew")))
 
         val forder = order
           .filter($"o_orderdate" <= ";CC@7;<7=;><C>C@A<C@" && $"o_orderdate" >= ";CC?7:;7:;><C>C@A<C@")
 
         val fpart = part
-          .filter(UDF.swpMatch($"p_type", lit("rtIRStAW+qIwLbp9XtpJ4A mUjI1hyDk3hNbqQS4RzLIQ QN9MIW0yQ0+F/MzHPEX4ig")))
+//          .filter(UDF.swpMatch($"p_type", lit("rtIRStAW+qIwLbp9XtpJ4A mUjI1hyDk3hNbqQS4RzLIQ QN9MIW0yQ0+F/MzHPEX4ig")))
+          .filter(UDF.swpMatch($"p_type", lit("IQ+06Gbk+j1OevXPQyeL5w 9pA5czXLpckT0odmboO9Pg 64FYZ/fh2BjS92glW+xCkA")))
 
         val nat = nation
           .join(supplier, $"n_nationkey" === supplier("s_nationkey"))

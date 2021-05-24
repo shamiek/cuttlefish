@@ -659,10 +659,12 @@ public class SWP extends CryptoScheme {
     }
 
     public void q02Const(String qName) {
-        String [] d = {"EUROPE", "BRASS"};
-        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1])};
+        String [] d = {"EUROPE", "BRASS", "AND BRASS", ".*BRASS"};
+        String [] cGram = {this.encrypt(d[0]), this.encrypt(d[1]), this.encrypt(d[2]), this.encryptRegex(d[3])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
         System.out.println(qName + " cGram: " + cGram[1] + "\tplain: " + this.decrypt(cGram[1]));
+        System.out.println(qName + " cGram: " + cGram[2] + "\tregex: " + cGram[3]);
+        System.out.println("match: " + this.match(cGram[2], cGram[3]));
     }
 
     public void q03Const(String qName) {
@@ -685,9 +687,11 @@ public class SWP extends CryptoScheme {
     }
 
     public void q09Const(String qName) {
-        String [] d = {"green"};
-        String [] cGram = {this.encrypt(d[0])};
+        String [] d = {"is green there", ".*green.*"};
+        String [] cGram = {this.encrypt(d[0]), this.encryptRegex(d[1])};
         System.out.println(qName + " cGram: " + cGram[0] + "\tplain: " + this.decrypt(cGram[0]));
+        System.out.println(qName + " cGram: " + cGram[0] + "\tregex: " + cGram[1]);
+        System.out.println("match: " + this.match(cGram[0], cGram[1]));
     }
 //    public void q13Const(String qName) {
 //        String [] d = {".*special.*requests.*"};
