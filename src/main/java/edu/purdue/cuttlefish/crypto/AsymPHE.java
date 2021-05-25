@@ -7,7 +7,10 @@ public abstract class AsymPHE<C> extends CryptoScheme {
     static final boolean ENABLE_RANDOM = false;
 
     // bitlength for modulo n
-    static final int BITLENGTH = 1024;
+    static final int BITLENGTH = Integer.parseInt(System.getenv("CF_ASYM_KEYS_LEN"));
+//    static final int BITLENGTH = 256;
+//    static final int BITLENGTH = 512;
+//    static final int BITLENGTH = 1024;
 
     // modulo
     public BigInteger n;
