@@ -731,7 +731,7 @@ public class SWP extends CryptoScheme {
     }
 
     public void s2TestAny(String qName) {
-        String ctxt = this.encrypt("AAA special BBB requests CCC");
+        String ctxt = this.encrypt("AAA  special  BBB requests CCC");
 
 //        String encRegex = this.encryptRegex("5");
         String encRegex = this.encryptRegex(".*special.*requests.*");
@@ -817,21 +817,21 @@ public class SWP extends CryptoScheme {
 
         SWP s = new SWP();
 
-        s.q02Const("[Q02].");
-        s.q03Const("[Q03].");
-        s.q05Const("[Q05].");
-        s.q08Const("[Q08].");
-        s.q09Const("[Q09].");
-        s.q13Const("[Q13].");
-        s.q14Const("[Q14].");
-        s.q16Const("[Q16].");
-        s.q17Const("[Q17].");
-        s.q19Const("[Q19].");
-        s.q20Const("[Q20].");
-        s.q22Const("[Q22].");
+//        s.q02Const("[Q02].");
+//        s.q03Const("[Q03].");
+//        s.q05Const("[Q05].");
+//        s.q08Const("[Q08].");
+//        s.q09Const("[Q09].");
+//        s.q13Const("[Q13].");
+//        s.q14Const("[Q14].");
+//        s.q16Const("[Q16].");
+//        s.q17Const("[Q17].");
+//        s.q19Const("[Q19].");
+//        s.q20Const("[Q20].");
+//        s.q22Const("[Q22].");
 //        s.q13Test("[Q13].");
 //        s.simpleTestOr("simpleTest");
 //        s.s1TestAny("s1TestAny");
-//        s.s2TestAny("s2TestAny");
+        s.s2TestAny("s2TestAny");
     }
 }

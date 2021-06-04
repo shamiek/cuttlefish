@@ -27,7 +27,7 @@ class Q09(spark: SparkSession) extends PheQuery(spark) {
       .join(order, $"l_orderkey" === order("o_orderkey"))
       .select($"n_name", $"o_orderyear",
         esub($"l_extendedprice", $"l_ext_disc").as("sub_eped"),
-        $"ps_supplycost", $"l_quantity")
+        $"ps_supplycost", $"l_quantity") // l_quantity_aes
 
     val interimRes = getResults(q)
     val startClientSide = System.nanoTime()

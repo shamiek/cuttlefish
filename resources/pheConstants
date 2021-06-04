@@ -5,6 +5,9 @@ Current encrypted literals are in parenthesis.
 
 Q01 l_shipdate			OPES	String	"1998-09-02"  			filter(<=) ";CCB7:C7:<><C>C@A<C@"
 
+
+
+
 Q02 r_name 				SWP 	String	"EUROPE"				filter(==) "3gNYd6/WjCzbwbpZEN6tJA" ("Ud791RkkjLOllvXr4YG8lA")
 Q02 p_size 				OPE 	Long	15						filter(==)	64424509440L
 Q02 p_type 				SWP		String  endsWith("BRASS")		filter(endsWith) "EuFvEbm4Ypz4BCCcscps9Q" (".*nTzKsw9KYgOGU28uW1OEzQ")
